@@ -7,7 +7,7 @@ let bigWordImg;
 let gridSpacing = 20;
 
 function preload() {
-  font = loadFont('/98_media/Neue-HaasGroteskDispW0496BlkIt.otf');
+  font = loadFont('/98_media/fonts/Neue-HaasGroteskDispW0496BlkIt.otf');
 }
 
 function setup() {
