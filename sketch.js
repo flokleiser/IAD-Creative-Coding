@@ -1,4 +1,4 @@
-let message = "InteractionDesign";
+let message = "InteractionDesign ";
 let bigWord = "ZHdK"
 let mouseRadius = 200;
 let targetRadius = 200;
@@ -14,10 +14,12 @@ function preload() {
 }
 
 function setup() {
+  //looks good: 1337 884
   createCanvas(windowWidth, windowHeight);
   background(0);
   textAlign(CENTER, CENTER);
   textFont(font);
+  console.log(windowWidth,windowHeight)
 
   imgAspectRatio = logoImg.height / logoImg.width;
 
@@ -36,9 +38,9 @@ function setup() {
 function draw() {
   background(0);
   let index = 0;
-  let gridSpacing = 18;
+  let gridSpacing = 18
 
-  mouseRadius = lerp(mouseRadius, targetRadius, 0.1);
+  mouseRadius = lerp(mouseRadius, targetRadius, 0.2);
 
     for (let y = gridSpacing / 2; y < height; y += gridSpacing) {
       for (let x = gridSpacing / 2; x < width; x += gridSpacing) {
@@ -61,9 +63,9 @@ function draw() {
 
           if (distance < mouseRadius) {
             if (r < 128 && g < 128 && b < 128) {
-              size += map(distance, 0, mouseRadius, 10, 2);
+              size += map(distance, 0, mouseRadius, 7, 2);
             } else {
-              size = 1 
+              size = 0.5 
             }
           } else {
             size += 3;
