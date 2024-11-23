@@ -1,7 +1,6 @@
 # IAD HS24 Creative Coding
 ## Typography, Flo Kleiser
-
-# https://flokleiser.github.io/IAD_Typography/
+### https://flokleiser.github.io/IAD-Creative-Coding/
 
 
 <div align="center">
