@@ -73,16 +73,23 @@ function draw() {
 
 
 
+          //inside the radius
           if (distance < mouseRadius) {
             if (r < 128 && g < 128 && b < 128) {
-              size += map(distance, 0, mouseRadius, 7, 2);
+              size += map(distance, 0, mouseRadius, 9, 6);
             } else {
-              size = 0.5 
+              // size = 0.5 
+              size = map(distance/2, 0, mouseRadius, 0, 6);
             }
+
+          //outside the radius
           } else {
-            size += 3;
-            // size += 2 
+            // size += 3;
+            //todo: change this
+            size += abs(sin((frameCount*0.05)+(x/2+y/2)*0.6) * 6)
           }
+
+
 
         textSize(size * 4);
         text(letter, x, y - (textAscent() + textDescent()) / 4);

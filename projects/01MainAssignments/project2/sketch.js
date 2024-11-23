@@ -1,7 +1,7 @@
 let message = "InteractionDesign";
 let bigWord = "ZHdK"
-let mouseRadius = 200;
-let targetRadius = 200;
+let mouseRadius = 250;
+let targetRadius = 250;
 let bigWordPixels = [];
 let logoImg;
 let imgAspectRatio;
@@ -59,15 +59,23 @@ function draw() {
         let r = bigWordImg.pixels[pixelIndex];
         let g = bigWordImg.pixels[pixelIndex + 1];
         let b = bigWordImg.pixels[pixelIndex + 2];
+
+        let timeOffset = frameCount * 2; 
+        let ripple = sin((distance - timeOffset) * 0.05) * 2;
+        if (ripple < 0) ripple = 0;
   
+        //inside radius
         if (distance < mouseRadius) {
             if (r < 128 && g < 128 && b < 128) {
-              size += map(distance, 0, mouseRadius, 10, 2);
+              size += map(distance, 0, mouseRadius, 12, 4) + ripple
+              // + abs(sin((frameCount*0.05)+(x/2+y/2)*0.6) * 6);
             } else {
               size -= 1
             }
+
+          //outside radius
           } else {
-            size += 4
+            size += 5 
           }
       
 
@@ -83,5 +91,5 @@ function mousePressed() {
 }
 
 function mouseReleased() { 
-  targetRadius = 200;
+  targetRadius = 250;
 }
