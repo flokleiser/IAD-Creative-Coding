@@ -5,11 +5,11 @@ ___
 
 ### To-Do:
 - [x] Fix issue with pixeldensity on retina display
-<br>
-- [ ] Project1:
+
+- [ ] Project1:
     - [ ] Animate grid
-    - [ ] Change behavior of pixels not part of image
-<br>
+    - [ ] Change behavior of pixels not part of image
+
 - [ ] Project2:
     - [ ] Animate grid
     - [ ] Change behavior of pixels onclick
