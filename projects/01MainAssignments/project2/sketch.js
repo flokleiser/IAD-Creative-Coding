@@ -22,10 +22,14 @@ function setup() {
   textAlign(CENTER, CENTER);
   textFont(font);
 
+  let textSizeFinal = windowWidth>1000? 500: windowWidth/3;
+  // console.log(textSizeFinal)
+
   bigWordImg = createGraphics(windowWidth, windowHeight);
   bigWordImg.textFont(font);
   bigWordImg.pixelDensity(1)
-  bigWordImg.textSize(windowWidth/3);
+  // bigWordImg.textSize(windowWidth/3);
+  bigWordImg.textSize(textSizeFinal);
   // bigWordImg.textSize(500);
   bigWordImg.textAlign(CENTER, CENTER);
   bigWordImg.background(0);
@@ -50,6 +54,7 @@ function draw() {
 
   mouseRadius = lerp(mouseRadius, targetRadius, 0.1);
   blurAmount = lerp(blurAmount, targetBlurAmount, 0.1);
+
 
 
       for (let y = gridSpacing / 2; y < height; y += gridSpacing) {
@@ -88,7 +93,7 @@ function draw() {
             //inside radius
             if (distance < mouseRadius) {
                 if (r < 128 && g < 128 && b < 128) {
-                  size += map(distance, 0, mouseRadius, 12, 4)
+                  size += map(distance, 0, mouseRadius, 12, 2)
                 } else {
                   size -= 1
                 }
@@ -106,9 +111,10 @@ function draw() {
         }
       }
 
-    if (blurAmount > 0) {
-      filter(BLUR, blurAmount);
-    }
+      if (blurAmount > 0) {
+        filter(BLUR, blurAmount);
+      }
+
 }
 
 function mousePressed() { 
