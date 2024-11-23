@@ -1,0 +1,18 @@
+// {
+//     "include": [
+//       "*.js",
+//       "libraries/*.js",
+//       "node_modules/@types/p5/global.d.ts"
+//     ]
+//   }
+
+{
+  "compilerOptions": {
+    "target": "es6"
+  },
+  "include": [
+    "*.js",
+    "**/*.js",
+    "/Users/flo/.vscode/extensions/samplavigne.p5-vscode-1.2.16/p5types/global.d.ts"
+ ]
+}

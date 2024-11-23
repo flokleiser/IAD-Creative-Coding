@@ -28,6 +28,8 @@ function setup() {
   bigWordImg.text(bigWord, bigWordImg.width / 2, bigWordImg.height / 2);
   bigWordImg.loadPixels();
 
+  pixelDensity(2)
+
 
 }
 
