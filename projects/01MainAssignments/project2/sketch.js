@@ -9,7 +9,7 @@ let imgWidth, imgHeight;
 let gridSpacing
 
 function preload() {
-  font = loadFont('/assets/Neue-HaasGroteskDispW0496BlkIt.otf');
+  font = loadFont('assets/Neue-HaasGroteskDispW0496BlkIt.otf');
 }
 
 function setup() {
