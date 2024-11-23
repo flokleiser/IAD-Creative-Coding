@@ -1,95 +1,263 @@
-// let message = "InteractionDesign ";
-// let bigWord = "ZHdK"
-// let mouseRadius = 200;
-// let targetRadius = 200;
-// let bigWordPixels = [];
-// let logoImg;
-// let imgAspectRatio;
-// let imgWidth, imgHeight;
+// import React, { useEffect, useState, useRef } from 'react';
+// import {motion, useSpring, useTransform, useAnimation, useDragControls, useMotionValue, animate, Easing} from "framer-motion"
+
+// export default function Lock() {
+
+//     const [activeNumber, setActiveNumber] = useState<number | null>(null)
+
+//     const lockRef= useRef<HTMLDivElement>(null);
+
+//     const [isDragging, setIsDragging] = useState(false);
+//     const [rotation, setRotation] = useState(0);
+
+//     const [dragStartAngle, setDragStartAngle] = useState(0);
+//     const [initialRotation, setInitialRotation] = useState(0);
+
+//     const [velocity, setVelocity] = useState(0);
+//     const friction = 0.1;
+
+//     let animationFrameId:number;
+//     let resetAnimationFrameId:number;
+
+//     const [filledCircleCount, setFilledCircleCount] = useState(0);
+//     const [isUnfilling, setIsUnfilling] = useState(false);
 
 
-// function preload() {
-//   // font = loadFont('/98_media/fonts/Neue-HaasGroteskDispW0496BlkIt.otf');
-//   font = loadFont('/projects/01MainAssignments/project1/assets/Neue-Haas-Grotesk-DispW0495Blk.ttf');  
-//   // projects/01MainAssignments/project1/assets/Neue-Haas-Grotesk-DispW0495Blk.ttf
-//   // font = loadFont('./assets')
-//   // font = loadFont('/assNeue-HaasGroteskDispW0496BlkIt.ttf');
-//   logoImg = loadImage('/projects/01MainAssignment/logo_slim.png');
-// }
+//     useEffect(() => {
+//         if (!isDragging && rotation !== 0) {
 
-// function setup() {
-//   //looks good: 1337 884
-//   createCanvas(windowWidth, windowHeight);
-//   background(0);
-//   textAlign(CENTER, CENTER);
-//   textFont(font);
-//   console.log(windowWidth,windowHeight)
+//             const resetRotation = () => {
 
-//   imgAspectRatio = logoImg.height / logoImg.width;
+// //old
 
-//   if (windowWidth / windowHeight > logoImg.width / logoImg.height) {
-//       imgHeight = windowHeight;
-//       imgWidth = windowHeight / imgAspectRatio;
-//     } else {
-//       imgWidth = windowWidth;
-//       imgHeight = windowWidth * imgAspectRatio;
-//     }
+//                 setRotation((prevRotation) => {
+//                     let newRotation = prevRotation - 10;
 
-//     logoImg.resize(windowWidth,windowHeight)
-//     logoImg.loadPixels();
-// }
-
-// function draw() {
-//   background(0);
-//   let index = 0;
-//   let gridSpacing = 18
-
-//   mouseRadius = lerp(mouseRadius, targetRadius, 0.2);
-
-//     for (let y = gridSpacing / 2; y < height; y += gridSpacing) {
-//       for (let x = gridSpacing / 2; x < width; x += gridSpacing) {
-//         let letter = message[index % message.length];
-//         fill(255);
-//         stroke(255)
-
-//         let distance = dist(mouseX, mouseY, x, y);
-//         let size = gridSpacing/width;
-
-//         let imgX = floor(map(x, (width - imgWidth) / 2, (width + imgWidth) / 2, 0, logoImg.width));
-//         let imgY = floor(map(y, (height - imgHeight) / 2, (height + imgHeight) / 2, 0, logoImg.height));
-
-//         let pixelIndex = (imgY * logoImg.width + imgX) * 4;
-//         let r = logoImg.pixels[pixelIndex];
-//         let g = logoImg.pixels[pixelIndex + 1];
-//         let b = logoImg.pixels[pixelIndex + 2];
+//                     if (newRotation < -360) {
+//                         newRotation += 360;
+//                     }
+//                     if (Math.abs(newRotation) < 11 && Math.abs(newRotation) > -11) {
+//                         return 0;
+//                     }
+//                     resetAnimationFrameId = requestAnimationFrame(resetRotation);
+//                     return newRotation;
+//                 });
 
 
+//             };
 
-//           if (distance < mouseRadius) {
-//             if (r < 128 && g < 128 && b < 128) {
-//               size += map(distance, 0, mouseRadius, 7, 2);
-//             } else {
-//               size = 0.5 
+//             resetRotation();
+
+//         } else if (resetAnimationFrameId) {
+//             cancelAnimationFrame(resetAnimationFrameId);
+//         }
+//         return () => {
+//             if (resetAnimationFrameId) {
+//                 cancelAnimationFrame(resetAnimationFrameId);
 //             }
-//           } else {
-//             size += 3;
-//             // size += 2 
-//           }
+//         };
+//     }, [isDragging]); 
 
-//         textSize(size * 4);
-//         text(letter, x, y - (textAscent() + textDescent()) / 4);
-//         index++;
+//     useEffect(() => {
+//         const updateRotation = () => {
+//             setVelocity((prevVelocity) => {
+//                 const newVelocity = prevVelocity * friction;
+//                 if (Math.abs(newVelocity) < 0.001) {
+//                     return 0;
+//                 }
+//                 setRotation((prevRotation) => prevRotation + newVelocity);
+//                 return newVelocity;
+//             });
+
+//             animationFrameId = requestAnimationFrame(updateRotation);
+//         };
+//         updateRotation();
+
+//         window.addEventListener('mousemove', handleMouseMove);
+//         window.addEventListener('mouseup', handleMouseUp);
+//         return () => {
+//             cancelAnimationFrame(animationFrameId);
+//             window.removeEventListener('mousemove', handleMouseMove);
+//             window.removeEventListener('mouseup', handleMouseUp);
+//         };
+//     }, [isDragging, dragStartAngle,
+//         //  initialRotation
+//         ]);
+
+//     const calculateAngle = (x:number, y:number) => {
+//         if (!lockRef.current) return 0;
+//         const rect = lockRef.current.getBoundingClientRect();
+//         const lockX = rect.left + rect.width / 2;
+//         const lockY = rect.top + rect.height / 2;
+
+//         // return Math.atan2(y - lockY, x - lockX) * (180 / Math.PI);
+//         return (Math.atan2(y - lockY, x - lockX) * (180 / Math.PI) + 360) % 360;
+//     };
+
+//     const fillCircles = () => {
+//         if (isUnfilling) return;
+//         setFilledCircleCount((prevCount) => {
+//             if (prevCount <= 4) {
+//                 if (prevCount < 4) {
+//                     prevCount = prevCount + 1;
+//                 }
+//                 if (prevCount === 4) {
+//                     setIsUnfilling(true)
+//                     setTimeout(() => {
+//                         emptyCircles()
+//                     }, 500)
+//                 }
+//             }
+//             else {
+//                 return 0
+//             }
+//             return prevCount
+//         });
+//     };
+
+//     const emptyCircles = () => {
+//         setFilledCircleCount((prevCount) => {
+//             if (prevCount > 0) {
+//                 // setIsShaking(true)
+//                 setTimeout(() => {
+//                     emptyCircles()
+//                 },100)
+//                 return prevCount - 1;
+//             } else {
+//                 setIsUnfilling(false)
+//                 // setIsShaking(false)
+//                 return prevCount
+//             }
+//         });
 //     }
-//   }
+
+//     const handleMouseDown = (e:React.MouseEvent<HTMLDivElement>) => {
+//         setIsDragging(true);
+//         const angle = calculateAngle(e.clientX, e.clientY);
+//         setDragStartAngle(angle);
+//         setInitialRotation(rotation);
+//     };
+
+//     const handleMouseMove = (e:MouseEvent) => {
+//         if (isDragging) {
+//             const currentAngle = calculateAngle(e.clientX, e.clientY);
+//             let angleDiff = currentAngle - dragStartAngle;
+
+//             let newRotation = initialRotation + angleDiff;
+//             if (newRotation < 0 && newRotation > -45) {
+//                     newRotation = -45;
+//             }
+//             // console.log(newRotation)
+//             setRotation(newRotation)
+
+//         }
+//     };
+
+//     const handleMouseUp = () => {
+//         setIsDragging(false);
+//     };
+
+//     return (
+//         <div className="bodyCenter" onMouseUp={() => setActiveNumber(null)} >
+//         {/* <div> */}
+//         <div style={{display: 'flex',flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center'}}>
+//             <h1>Lock</h1>
+
+//         <div style={{display: 'flex', flexDirection: 'row'}}>
+//             <motion.div className="navbarButton" style={{backgroundColor:'rgba(0,0,0,0)', }} 
+//             // custom={i} 
+//             // variants={variants}
+//             // animate={controls}
+//             >
+//                 <span className="material-symbols-outlined"> {filledCircleCount >= 1? 'radio_button_checked' : 'radio_button_unchecked'} </span>
+//             </motion.div>
+//             <motion.div className="navbarButton" style={{backgroundColor:'rgba(0,0,0,0)', }} >
+//                 <span className="material-symbols-outlined"> {filledCircleCount >= 2? 'radio_button_checked' : 'radio_button_unchecked'} </span>
+//             </motion.div>
+//             <motion.div className="navbarButton" style={{backgroundColor:'rgba(0,0,0,0)', }} >
+//                 <span className="material-symbols-outlined"> {filledCircleCount >= 3? 'radio_button_checked' : 'radio_button_unchecked'} </span>
+//             </motion.div>
+//             <motion.div className="navbarButton" style={{backgroundColor:'rgba(0,0,0,0)', }} >
+//                 <span className="material-symbols-outlined"> {filledCircleCount === 4? 'radio_button_checked' : 'radio_button_unchecked'} </span>
+//             </motion.div>
+//         </div>
+//         </div>
+
+
+//         <div style={{justifyContent:'center', alignItems:'center', display:'flex'}}>
+
+//         <div className='lockDiv'>
+//         <motion.div className="lock"
+//             ref={lockRef}
+//             onMouseDown={handleMouseDown}
+//             style={{ transform: `rotate(${rotation}deg)` }}
+//         >
+
+//             <div className="lockCenter1" style={{ top: '50%', left: '50%' }}></div>
+//             <div className="smallerLockCircle" style={{top: '74.75%', left : '74.75%', borderRadius:'0 0 230px 0',width:200,height:200, pointerEvents:'none'}} />
+
+//             <div className="smallerLockCircleInvert" style={{ top: '57%', left: '84.75%',  width:115,height:57.5, borderRadius:'0px 0px 57.5px 57.5px'}} />
+//             <div className="smallerLockCircleInvert" style={{ top: '84.75%', left: '57%', height:115,width:57.5, borderRadius:'0px 57.5px 57.5px 0px'}} />
+
+//             <div className="lockCenter2" style={{top: '50%', left: '50%'}}></div>
+//             <div className="lockCenter1" style={{width:165,height:165,top: '50%', left: '50%' }}></div>
+
+//             <div className="smallerLockCircle" style={{ top: '50%', left: '15%' }} id="number7" onMouseDown={() => setActiveNumber(7)}/>
+//             <div className="smallerLockCircle" style={{ top: '15%', left: '50%' }} id="number4" onMouseDown={() => setActiveNumber(4)}/>
+//             <div className="smallerLockCircle" style={{ top: '50%', left: '85%' }} id="number1" onMouseDown={() => setActiveNumber(1)}/>
+//             <div className="smallerLockCircle" style={{ top: '85%', left: '50%' }} id="number0" onMouseDown={() => setActiveNumber(0)}/>
+//             <div className="smallerLockCircle" style={{ top: '32.5%', left: '80%' }} id="number2" onMouseDown={() => setActiveNumber(2)} />
+//             <div className="smallerLockCircle" style={{ top: '67.5%', left: '20%' }} id="number8" onMouseDown={() => setActiveNumber(8)}/>
+//             <div className="smallerLockCircle" style={{ top: '32.5%', left: '20%' }} id="number6" onMouseDown={() => setActiveNumber(6)}/>
+//             <div className="smallerLockCircle" style={{ top: '19.5%', left: '32.5%' }} id="number5" onMouseDown={() => setActiveNumber(5)} />
+//             <div className="smallerLockCircle" style={{ top: '80.5%', left: '32.5%' }} id="number9" onMouseDown={() => setActiveNumber(9)}/>
+//             <div className="smallerLockCircle" style={{ top: '19.5%', left: '67.5%' }} id="number3" onMouseDown={() => setActiveNumber(3)}/>
+//         </motion.div>
+
+//             <div className="smallerLockCircleInvert" style={{top: '75%', left : '75%', width:55,height:55, borderRadius:'50%', }} />
+//             <div className="smallerLockCircleInvert" style={{top: '75%', left : '75%', width:100,height:100, borderRadius:'50%', opacity:0,
+//             }} 
+//             onMouseOver={() =>  {isDragging? fillCircles() :' ' }}
+//             />
+//             <div className="lockText" style={{ top: '50%', left: '85%', pointerEvents:'none', opacity: activeNumber === 1 ? 1 : 0.25}}>
+//                1 
+//             </div>
+//             <div className="lockText" style={{ top: '85%', left: '50%', pointerEvents:'none', opacity: activeNumber === 0 ? 1 : 0.25}} >
+//                 0 
+//             </div>
+//             <div className="lockText" style={{ top: '80.5%', left: '32.5%',pointerEvents:'none', opacity: activeNumber === 9 ? 1 : 0.25}} >
+//                9 
+//             </div>
+//             <div className="lockText" style={{ top: '67.5%', left: '20%',pointerEvents:'none', opacity: activeNumber === 8 ? 1 : 0.25}} >
+//                8 
+//             </div>
+//             <div className="lockText" style={{ top: '50%', left: '15%',pointerEvents:'none',  opacity: activeNumber === 7 ? 1 : 0.25}}>
+//                7 
+//             </div>
+//             <div className="lockText" style={{ top: '32.5%', left: '20%',pointerEvents:'none', opacity: activeNumber === 6 ? 1 : 0.25}} >
+//                6 
+//             </div>
+//             <div className="lockText" style={{ top: '19.5%', left: '32.5%',pointerEvents:'none', opacity: activeNumber === 5 ? 1 : 0.25}} >
+//                5 
+//             </div>
+//             <div className="lockText" style={{ top: '15%', left: '50%', pointerEvents:'none', opacity: activeNumber === 4 ? 1 : 0.25}} >
+//                4 
+//             </div>
+//             <div className="lockText" style={{ top: '19.5%', left: '67.5%',pointerEvents:'none', opacity: activeNumber === 3 ? 1 : 0.25}} >
+//                3 
+//             </div>
+//             <div className="lockText" style={{ top: '32.5%', left: '80%',pointerEvents:'none', opacity: activeNumber === 2 ? 1 : 0.25}} >
+//                 2 
+//             </div>
+
+//         </div>
+
+//         </div>
+
+//         </div>
+//     );
 // }
 
-// function mousePressed() { 
-//   targetRadius = 500;
-// }
-
-// function mouseReleased() { 
-//   targetRadius = 100;
-// }
 
 
 console.log('test')

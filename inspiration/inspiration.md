@@ -11,3 +11,5 @@
 ___
 
 # INSPIRATION MICRO INTERACTIONS 
+
+![lock](./lock-thing.gif)
