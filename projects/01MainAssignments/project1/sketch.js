@@ -1,4 +1,4 @@
-let message = "InteractionDesign ";
+let message = "InteractionDesign";
 let bigWord = "ZHdK"
 let mouseRadius = 200;
 let targetRadius = 200;
@@ -19,7 +19,6 @@ function setup() {
   background(0);
   textAlign(CENTER, CENTER);
   textFont(font);
-  console.log(windowWidth,windowHeight)
   pixelDensity(1)
 
   imgAspectRatio = logoImg.height / logoImg.width;
@@ -33,13 +32,18 @@ function setup() {
     }
 
     logoImg.resize(windowWidth,windowHeight)
+    logoImg.pixelDensity(1)
     logoImg.loadPixels();
 }
 
 function draw() {
   background(0);
   let index = 0;
-  let gridSpacing = 18
+  if (windowHeight < windowWidth) {
+    gridSpacing = windowHeight/50;
+  } else {
+    gridSpacing = windowWidth/50;
+  }
 
   mouseRadius = lerp(mouseRadius, targetRadius, 0.2);
 

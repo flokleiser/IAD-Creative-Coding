@@ -4,5 +4,12 @@
 ___
 
 ### To-Do:
-- [ ] Fix issue with pixeldensity on retina display
-- [ ] Convert windowWidth & windowHeight to fixed values        
+- [x] Fix issue with pixeldensity on retina display
+<br>
+- [ ] Project1:
+    - [ ] Animate grid
+    - [ ] Change behavior of pixels not part of image
+<br>
+- [ ] Project2:
+    - [ ] Animate grid
+    - [ ] Change behavior of pixels onclick

@@ -20,15 +20,15 @@ function setup() {
 
   bigWordImg = createGraphics(windowWidth, windowHeight);
   bigWordImg.textFont(font);
-//   bigWordImg.textSize(windowWidth/3);
-  bigWordImg.textSize(500);
+  bigWordImg.pixelDensity(1)
+  bigWordImg.textSize(windowWidth/3);
+  // bigWordImg.textSize(500);
   bigWordImg.textAlign(CENTER, CENTER);
   bigWordImg.background(0);
   bigWordImg.fill(255);
   bigWordImg.text(bigWord, bigWordImg.width / 2, bigWordImg.height / 2);
   bigWordImg.loadPixels();
-
-  pixelDensity(2)
+  pixelDensity(1)
 
 
 }
@@ -36,13 +36,11 @@ function setup() {
 function draw() {
   background(0);
   let index = 0;
-  // let gridSpacing = (windowWidth/60) + (windowHeight/60)/2;
   if (windowHeight < windowWidth) {
-    gridSpacing = windowHeight/50;
+    gridSpacing = windowHeight/40;
   } else {
-    gridSpacing = windowWidth/50;
+    gridSpacing = windowWidth/40;
   }
-  // let gridSpacing ? (windowWidth < windowHeight) : 
 
   mouseRadius = lerp(mouseRadius, targetRadius, 0.1);
 
