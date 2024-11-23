@@ -9,8 +9,12 @@ let imgWidth, imgHeight;
 
 
 function preload() {
-  font = loadFont('/98_media/fonts/Neue-HaasGroteskDispW0496BlkIt.otf');
-  logoImg = loadImage('/98_media/logos/slim/logo_slim.png');
+  // font = loadFont('/98_media/fonts/Neue-HaasGroteskDispW0496BlkIt.otf');
+  font = loadFont('/projects/01MainAssignments/project1/assets/Neue-Haas-Grotesk-DispW0495Blk.ttf');  
+  // projects/01MainAssignments/project1/assets/Neue-Haas-Grotesk-DispW0495Blk.ttf
+  // font = loadFont('./assets')
+  // font = loadFont('/assNeue-HaasGroteskDispW0496BlkIt.ttf');
+  logoImg = loadImage('/projects/01MainAssignment/assets/logo_slim.png');
 }
 
 function setup() {
