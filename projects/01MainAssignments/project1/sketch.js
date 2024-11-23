@@ -10,7 +10,8 @@ let imgWidth, imgHeight;
 
 function preload() {
   font = loadFont('assets/Neue-HaasGroteskDispW0496BlkIt.otf');
-  logoImg = loadImage('assets/logo_slim.png');
+  // logoImg = loadImage('assets/logo_slim.png');
+  logoImg = loadImage('assets/logo_slim_square.png');
 }
 
 function setup() {
@@ -21,15 +22,18 @@ function setup() {
   textFont(font);
   pixelDensity(1)
 
+  if (windowHeight < windowWidth) {
+    gridSpacing = windowHeight/50;
+  } else {
+    gridSpacing = windowWidth/50;
+  }
+
+  console.log(gridSpacing)
+
   imgAspectRatio = logoImg.height / logoImg.width;
 
-  if (windowWidth / windowHeight > logoImg.width / logoImg.height) {
-      imgHeight = windowHeight;
-      imgWidth = windowHeight / imgAspectRatio;
-    } else {
-      imgWidth = windowWidth;
-      imgHeight = windowWidth * imgAspectRatio;
-    }
+  imgWidth = gridSpacing * 45 
+  imgHeight = imgWidth
 
     logoImg.resize(windowWidth,windowHeight)
     logoImg.pixelDensity(1)
@@ -39,11 +43,6 @@ function setup() {
 function draw() {
   background(0);
   let index = 0;
-  if (windowHeight < windowWidth) {
-    gridSpacing = windowHeight/50;
-  } else {
-    gridSpacing = windowWidth/50;
-  }
 
   mouseRadius = lerp(mouseRadius, targetRadius, 0.2);
 
@@ -56,8 +55,16 @@ function draw() {
         let distance = dist(mouseX, mouseY, x, y);
         let size = gridSpacing/width;
 
-        let imgX = floor(map(x, (width - imgWidth) / 2, (width + imgWidth) / 2, 0, logoImg.width));
-        let imgY = floor(map(y, (height - imgHeight) / 2, (height + imgHeight) / 2, 0, logoImg.height));
+        let imgX = constrain(
+          floor(map(x, (width - imgWidth) / 2, (width + imgWidth) / 2, 0, logoImg.width)),
+          0,
+          logoImg.width - 1
+        );
+        let imgY = constrain(
+          floor(map(y, (height - imgHeight) / 2, (height + imgHeight) / 2, 0, logoImg.height)),
+          0,
+          logoImg.height - 1
+        );
 
         let pixelIndex = (imgY * logoImg.width + imgX) * 4;
         let r = logoImg.pixels[pixelIndex];
