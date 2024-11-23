@@ -24,17 +24,20 @@ function setup() {
   textFont(font);
   pixelDensity(1)
 
-  if (windowHeight < windowWidth) {
-    gridSpacing = windowHeight/50;
-  } else {
-    gridSpacing = windowWidth/50;
-  }
+  // if (windowHeight < windowWidth) {
+  //   gridSpacing = windowHeight/50;
+  // } else {
+  //   gridSpacing = windowWidth/50;
+  // }
+
+  gridSpacing = min(windowWidth, windowHeight) / 50;
 
   console.log(gridSpacing)
 
   imgAspectRatio = logoImg.height / logoImg.width;
 
-  imgWidth = gridSpacing * 45 
+  // imgWidth = gridSpacing * 45 
+  imgWidth = windowWidth>1000? 1200 : gridSpacing * 45;
   imgHeight = imgWidth
 
     logoImg.resize(windowWidth,windowHeight)
@@ -79,17 +82,17 @@ function draw() {
           //inside the radius
           if (distance < mouseRadius) {
             if (r < 128 && g < 128 && b < 128) {
-              size += map(distance, 0, mouseRadius, 12, 6);
+              size += map(distance, 0, mouseRadius, 12, 6) + abs(sin((frameCount*0.05)+(x+y)*0.6) * 3);
             } else {
               // size = 0.5 
-              size = map(distance/2, 0, mouseRadius, 0, 6);
+              size = map(distance/3, 0, mouseRadius, 0, 6);
             }
 
           //outside the radius
           } else {
-            // size += 3;
+            size += 3;
             //todo: change this
-            size += abs(sin((frameCount*0.05)+(x/2+y/2)*0.6) * 6)
+            // size += abs(sin((frameCount*0.05)+(x/2+y/2)*0.6) * 6)
           }
 
 
@@ -112,6 +115,6 @@ function mousePressed() {
 }
 
 function mouseReleased() { 
-  targetRadius = 100;
+  targetRadius = 200;
   // targetBlurAmount = 0
 }
