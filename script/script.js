@@ -40,8 +40,8 @@ function createProjectCard() {
           <div class="card" id="${childId}" onclick="openProject()"
             style="background: url(./projects/${
               student.projects[i].folder
-            // }/project${j + 1}/thumbnail.${
-            }/project${j + 1}/thumbnailEX.${
+            }/project${j + 1}/thumbnail.${
+            // }/project${j + 1}/thumbnailEX.${
 
         student.thumbnailExtension
       }) center center/cover">
