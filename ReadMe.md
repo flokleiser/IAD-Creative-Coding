@@ -7,9 +7,5 @@ ___
 - [x] Fix issue with pixeldensity on retina display
 
 - [ ] Project1:
-    - [ ] Animate grid
+    - [x] Change grid animation 
     - [ ] Change behavior of pixels not part of image
-
-- [ ] Project2:
-    - [ ] Animate grid
-    - [ ] Change behavior of pixels onclick

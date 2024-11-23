@@ -6,6 +6,8 @@ let bigWordPixels = [];
 let logoImg;
 let imgAspectRatio;
 let imgWidth, imgHeight;
+let blurAmount = 0
+let targetBlurAmount = 0;
 
 
 function preload() {
@@ -45,6 +47,7 @@ function draw() {
   let index = 0;
 
   mouseRadius = lerp(mouseRadius, targetRadius, 0.2);
+  blurAmount = lerp(blurAmount, targetBlurAmount, 0.1);
 
     for (let y = gridSpacing / 2; y < height; y += gridSpacing) {
       for (let x = gridSpacing / 2; x < width; x += gridSpacing) {
@@ -76,7 +79,7 @@ function draw() {
           //inside the radius
           if (distance < mouseRadius) {
             if (r < 128 && g < 128 && b < 128) {
-              size += map(distance, 0, mouseRadius, 9, 6);
+              size += map(distance, 0, mouseRadius, 12, 6);
             } else {
               // size = 0.5 
               size = map(distance/2, 0, mouseRadius, 0, 6);
@@ -96,12 +99,19 @@ function draw() {
         index++;
     }
   }
+
+  // if (blurAmount > 0) {
+  //   filter(BLUR, blurAmount);
+  // }
+
 }
 
 function mousePressed() { 
-  targetRadius = 500;
+  targetRadius = 550;
+  // targetBlurAmount = 2.5;
 }
 
 function mouseReleased() { 
   targetRadius = 100;
+  // targetBlurAmount = 0
 }

@@ -7,6 +7,10 @@ let logoImg;
 let imgAspectRatio;
 let imgWidth, imgHeight;
 let gridSpacing
+let blurAmount = 0
+let targetBlurAmount = 0;
+
+let mousePressedFlag = false;
 
 function preload() {
   font = loadFont('assets/Neue-HaasGroteskDispW0496BlkIt.otf');
@@ -36,60 +40,85 @@ function setup() {
 function draw() {
   background(0);
   let index = 0;
-  if (windowHeight < windowWidth) {
-    gridSpacing = windowHeight/40;
-  } else {
-    gridSpacing = windowWidth/40;
-  }
+  // if (windowHeight < windowWidth) {
+  //   gridSpacing = windowHeight/40;
+  // } else {
+  //   gridSpacing = windowWidth/40;
+  // }
+
+  gridSpacing = min(windowWidth, windowHeight) / 40;
 
   mouseRadius = lerp(mouseRadius, targetRadius, 0.1);
+  blurAmount = lerp(blurAmount, targetBlurAmount, 0.1);
 
-    for (let y = gridSpacing / 2; y < height; y += gridSpacing) {
-      for (let x = gridSpacing / 2; x < width; x += gridSpacing) {
-        let letter = message[index % message.length];
-        fill(255);
-        stroke(255)
 
-        let distance = dist(mouseX, mouseY, x, y);
-        let size = gridSpacing/width;
+      for (let y = gridSpacing / 2; y < height; y += gridSpacing) {
+        for (let x = gridSpacing / 2; x < width; x += gridSpacing) {
+            let letter = message[index % message.length];
+            fill(255);
+            stroke(255)
 
-        let imgX = floor(map(x, 0, width, 0, bigWordImg.width));
-        let imgY = floor(map(y, 0, height, 0, bigWordImg.height));
-        let pixelIndex = (imgY * bigWordImg.width + imgX) * 4;
-        let r = bigWordImg.pixels[pixelIndex];
-        let g = bigWordImg.pixels[pixelIndex + 1];
-        let b = bigWordImg.pixels[pixelIndex + 2];
+            let distance = dist(mouseX, mouseY, x, y);
+            let size = gridSpacing/width;
 
-        let timeOffset = frameCount * 2; 
-        let ripple = sin((distance - timeOffset) * 0.05) * 2;
-        if (ripple < 0) ripple = 0;
-  
-        //inside radius
-        if (distance < mouseRadius) {
-            if (r < 128 && g < 128 && b < 128) {
-              size += map(distance, 0, mouseRadius, 12, 4) + ripple
-              // + abs(sin((frameCount*0.05)+(x/2+y/2)*0.6) * 6);
+            let imgX = floor(map(x, 0, width, 0, bigWordImg.width));
+            let imgY = floor(map(y, 0, height, 0, bigWordImg.height));
+            let pixelIndex = (imgY * bigWordImg.width + imgX) * 4;
+            let r = bigWordImg.pixels[pixelIndex];
+            let g = bigWordImg.pixels[pixelIndex + 1];
+            let b = bigWordImg.pixels[pixelIndex + 2];
+
+            let waveAmplitude = 25
+            let waveSpeed = frameCount * 0.05;
+            let noiseScale = 0.005; 
+
+            if (mousePressedFlag) {
+              waveAmplitude = 10; 
+
             } else {
-              size -= 1
+                waveAmplitude = 25; 
             }
-
-          //outside radius
-          } else {
-            size += 5 
-          }
       
+            let waveX = sin((x * noiseScale) + waveSpeed) * waveAmplitude;
+            let waveY = cos((y * noiseScale) + waveSpeed) * waveAmplitude;
+      
+            let finalX = x + waveX * 0.25; 
+            let finalY = y + waveY * 0.5;       
+      
+            //inside radius
+            if (distance < mouseRadius) {
+                if (r < 128 && g < 128 && b < 128) {
+                  size += map(distance, 0, mouseRadius, 12, 4)
+                } else {
+                  size -= 1
+                }
 
-        textSize(size * 4);
-        text(letter, x, y - (textAscent() + textDescent()) / 4);
-        index++;
-    }
+              //outside radius
+              } else {
+                size += 5
+              }
+          
+
+            textSize(size * 4);
+            // text(letter, x, y - (textAscent() + textDescent()) / 4);
+            text(letter, finalX, finalY- (textAscent() + textDescent()) / 4);
+            index++;
+        }
+      }
+
+    if (blurAmount > 0) {
+      filter(BLUR, blurAmount);
     }
 }
 
 function mousePressed() { 
+  mousePressedFlag = true;
   targetRadius = 700;
+  targetBlurAmount = 3;
 }
 
 function mouseReleased() { 
+  mousePressedFlag = false;
   targetRadius = 250;
+  targetBlurAmount = 0;
 }
