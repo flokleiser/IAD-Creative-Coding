@@ -107,7 +107,7 @@ function draw() {
 }
 
 function mousePressed() { 
-  targetRadius = 550;
+  targetRadius = 650;
   // targetBlurAmount = 2.5;
 }
 
