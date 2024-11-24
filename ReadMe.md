@@ -4,12 +4,11 @@
 ___
 
 ### To-Do:
-- [x] Fix issue with pixeldensity on retina display
-
-- [ ] Project1:
+- [ ] Project1 & Project2
+    - [x] Fix issue with pixeldensity on retina display
     - [x] Change grid animation 
     - [ ] Change behavior of pixels not part of image
 
 - [ ] Project3:
-    - [ ] Search more inspo
-    - [ ] Fix lock not drawing properly
+    - [ ] Button to increase/decrease cursor array
+    - [ ] --> +/-/ /2 / *2 etc
