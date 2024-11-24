@@ -1,63 +1,11 @@
 let cursors = [];
 let followCursor;
-let button1Flag = false;
-let button2Flag = false
-let button1
-let button2
+let buttons = []
+let buttonFlags = []
 
 
 function preload() {
   cursor = loadImage('assets/default.svg');
-}
-
-class Cursor {
-  constructor(width, height) {
-    this.width = width;
-    this.height = height;
-
-    this.x = random(width);
-    this.y = random(height);
-    this.angle = random(TWO_PI);
-    this.factor = 0.8 + random(0.4);
-  }
-
-  move(v) {
-    this.rotate(v);
-    this.scale(v);
-
-    this.x += v.x;
-    this.y += v.y;
-
-    if (this.x < 0) this.x += this.width;
-    if (this.y < 0) this.y += this.height;
-    this.x = this.x % this.width;
-    this.y = this.y % this.height;
-  }
-
-  rotate(v) {
-    const newX = v.x * cos(this.angle) - v.y * sin(this.angle);
-    const newY = v.x * sin(this.angle) + v.y * cos(this.angle);
-    v.x = newX;
-    v.y = newY;
-  }
-
-  scale(v) {
-    v.x *= this.factor;
-    v.y *= this.factor;
-  }
-
-  draw() {
-
-    image(cursor, this.x-11, this.y-11,cursor.width, cursor.height);
-    noStroke();
-  }
-}
-
-class FollowCursor extends Cursor {
-  move(e) {
-    this.x = e.x;
-    this.y = e.y;
-  }
 }
 
 function drawButton(button, buttonText, buttonFlag) {
@@ -76,11 +24,26 @@ function drawButton(button, buttonText, buttonFlag) {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  // const numCursors = 35;
-  const numCursors = 2
+  const numCursors = 0
 
-  button1 = { x: width / 2 - 150, y: height / 2, width: 200, height: 100 };
-  button2 = { x: width / 2 + 150, y: height / 2, width: 200, height: 100 };
+  let buttonWidth = 200;
+  let buttonHeight = 200;
+  let gridRows = 4;
+  let gridCols = 5;
+  let padding = 20
+  let gridWidth = gridCols * (buttonWidth + padding) - padding;
+  let gridHeight = gridRows * (buttonHeight + padding) - padding;
+  let startX = (width - gridWidth) / 2 + buttonWidth / 2;
+  let startY = (height - gridHeight) / 2 + buttonHeight / 2;
+
+  for (let row = 0; row < gridRows; row++) {
+    for (let col = 0; col < gridCols; col++) {
+      let x = startX + col * (buttonWidth + padding);
+      let y = startY + row * (buttonHeight + padding);
+      buttons.push({ x: x, y: y, width: buttonWidth, height: buttonHeight });
+      buttonFlags.push(false);
+    }
+  }
 
   for (let i = 0; i < numCursors; i++) {
     cursors.push(new Cursor(width, height));
@@ -94,24 +57,14 @@ function setup() {
 function draw() {
   background(255);
 
-  drawButton(button1, "Button 1", button1Flag);
-  drawButton(button2, "Button 2", button2Flag);
+  for (let i = 0; i < buttons.length; i++) {
+    drawButton(buttons[i], `Button ${i + 1}`, buttonFlags[i]);
+  }
 
   cursors.forEach((cursor) => {
     cursor.draw();
   });
   followCursor.draw();
-}
-
-function mouseMoved() {
-  const movement = { x: movedX, y: movedY };
-  cursors.forEach((cursor) => {
-    cursor.move(movement);
-  });
-
-  if (followCursor) {
-    followCursor.move({ x: mouseX, y: mouseY });
-  }
 }
 
 function isInsideButton(x, y, button) {
@@ -131,13 +84,23 @@ function isCursorOverButton(button) {
   return false;
 }
 
+function mouseMoved() {
+  const movement = { x: movedX, y: movedY };
+  cursors.forEach((cursor) => {
+    cursor.move(movement);
+  });
+
+  if (followCursor) {
+    followCursor.move({ x: mouseX, y: mouseY });
+  }
+}
+
 function mousePressed() {
-  if (isInsideButton(mouseX, mouseY, button1) || isCursorOverButton(button1)) {
-    console.log("Button 1 pressed", button1Flag);
-    button1Flag = !button1Flag;
-  } else if (isInsideButton(mouseX, mouseY, button2)|| isCursorOverButton(button2)) {
-    button2Flag = !button2Flag;
-    console.log("Button 2 pressed", button2Flag);
+  cursors.push(new Cursor(width, height));
+  for (let i = 0; i < buttons.length; i++) {
+    if (isInsideButton(mouseX, mouseY, buttons[i]) || isCursorOverButton(buttons[i])) {
+      buttonFlags[i] = !buttonFlags[i];
+    }
   }
 }
 
