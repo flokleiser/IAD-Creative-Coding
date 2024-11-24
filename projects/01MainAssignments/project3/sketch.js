@@ -255,7 +255,8 @@ function mousePressed() {
   }
 
   if (cursors.length < 25) {
-  cursors.push(new Cursor(width, height));
+  // cursors.push(new Cursor(width, height));
+  cursors.push(new Cursor(width, height, mouseX, mouseY));
   } else {
     console.log('max')
   }
