@@ -2,13 +2,19 @@ let cursors = [];
 let followCursor;
 let buttons = []
 let buttonFlags = []
-
 let extraButtons = []
 let extraButtonFlags = []
 
+let bigDiv = {};
+let topRect = {}; 
+let bottomRect = {}; 
+
 let reloadButton;
+let skipButton;
 
 let winningPercentage = 0.8;
+// let winningPercentage = 0.2;
+
 
 let buttonWidth = 125;
 let buttonHeight = 125;
@@ -16,11 +22,8 @@ let gridRows = 4;
 let gridCols = 4;
 let padding = 7 
 
+let gridWidth
 let gridHeight
-
-let bigDiv = {};
-let topRect = {}; 
-let bottomRect = {}; 
 
 
 function preload() {
@@ -30,13 +33,11 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   const numCursors = 0
-  let gridWidth = gridCols * (buttonWidth + padding) - padding;
+  gridWidth= gridCols * (buttonWidth + padding) - padding;
   gridHeight = gridRows * (buttonHeight + padding) - padding;
 
   let bigDivWidth = gridWidth + padding * 2;
   let bigDivHeight = gridHeight + 300; 
-
-
 
   let scaleFactor = 1;
   if (bigDivHeight > height || bigDivWidth > width) {
@@ -90,7 +91,10 @@ function setup() {
   extraButtons.push({ x: width / 2, y: 100, width: 200, height: 100 });
   extraButtonFlags.push(false);
 
-  reloadButton = { x: width / 2, y: height/2, width: 400, height: 200 };
+  reloadButton = {x:bigDiv.width + bigDiv.width/1.71 + padding/4, y:bottomRect.y +5.65*padding, width:100, height:65}
+  // rect(bigDiv.width + bottomRect.width/2.5 + padding/4,bottomRect.y +5.5*padding,100,65,3,3,3,3)
+  // skipButton = { x: bottomRect.x, y: bottomRect.y, width: 100, height: 50 };
+
 
   for (let i = 0; i < numCursors; i++) {
     cursors.push(new Cursor(width, height));
@@ -104,21 +108,17 @@ function setup() {
 function draw() {
   background(255);
 
-  drawUI()
-
   for (let i = 0; i < buttons.length; i++) {
     drawButtonGrid(buttons[i],' ', buttonFlags[i]);
   }
+
+  drawUI()
 
   let coloredCount = countColoredButtons();
   let percentage = (coloredCount / buttons.length) * 100;
   fill(0);
   textSize(20);
   text(`Progress: ${round(percentage)}%`, width-75 , 25);
-
-  if (coloredCount >= buttons.length * winningPercentage) {
-    drawButton(reloadButton, "Continue", false);
-  }
 
   cursors.forEach((cursor) => {
     cursor.draw();
@@ -133,16 +133,13 @@ function drawUI() {
   stroke(0);
   rect(bigDiv.x, bigDiv.y, bigDiv.width, bigDiv.height);
 
-  // fill(240);
   fill(80,170,255)	
   noStroke();
   rect(topRect.x, topRect.y, topRect.width, topRect.height);
 
   fill(255);
-  // fill(80,170,255)	
   rect(bottomRect.x, bottomRect.y, bottomRect.width, bottomRect.height);
 
-  // textAlign(CENTER, CENTER);  
   textAlign(LEFT, CENTER);
   textStyle(BOLD)
   textSize(25);
@@ -151,18 +148,44 @@ function drawUI() {
   textSize(50);
   text(`${winningPercentage * 100}%`,(topRect.x + 7*padding),topRect.y+topRect.height/2);
   textSize(25);
-  text(`of the buttons to continue`, topRect.x + 7*padding,topRect.y+ topRect.height/1.5 + 2*padding);
+  text(`of the squares to continue`, topRect.x + 7*padding,topRect.y+ topRect.height/1.5 + 2*padding);
+  // pop()
+  
+
+  textStyle(NORMAL)
+  textSize(15);
+  fill(80,170,255)	
+  textAlign(CENTER, CENTER);
+  rect(bigDiv.width + 8*padding + bottomRect.width/2.5,bottomRect.y + padding,100,65,3,3,3,3)
+  fill(255)
+  // text("SKIP", bottomRect.width-5*padding + bottomRect.width/2.5 + 50, bottomRect.y +padding+ 32.5)
+
+  let coloredCount = countColoredButtons();
+  fill(255)
+
+  if (coloredCount >= buttons.length * winningPercentage) {
+    rect(topRect.x-padding/2,topRect.y+topRect.height,gridWidth+padding,gridHeight+2*padding)
+    fill(0)
+    textSize(25)
+    text("You are probably human", topRect.x + topRect.width/2, topRect.y + topRect.height + padding + gridHeight/2)
+    drawButton(reloadButton, "Reload", false);
+  }
+
 
 }
 
 function drawButton(button, buttonText, buttonFlag) {
   rectMode(CENTER);
-  fill(mouseIsPressed? "#333333": "#000000");
-  rect(button.x, button.y, button.width, button.height, 10, 10, 10, 10);
+  // fill(mouseIsPressed? "#333333": color(80,170,255));
+  fill(80,170,255)
+  rect(button.x, button.y, button.width, button.height, 3, 3, 3, 3);
+  // rect(bigDiv.width + bottomRect.width/2.5 + padding/4,bottomRect.y +5.5*padding,100,65,3,3,3,3)
   fill(255);
   textAlign(CENTER, CENTER);
-  textSize(50);
+  // textSize(50);
+  textSize(20)
   text(buttonText, button.x, button.y);
+  // text("Reload", bottomRect.width-5*padding + bottomRect.width/2.5 + 50, bottomRect.y +padding+ 32.5)
 }
 
 function drawButtonGrid(button, buttonText, buttonFlag) {
