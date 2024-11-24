@@ -6,8 +6,10 @@ class Cursor {
   
       // this.x = random(width);
       // this.y = random(height);
-      this.x = x + random(-200, 200);
-      this.y = y + random(-200, 200);
+      // this.x = x + random(-200, 200);
+      // this.y = y + random(-200, 200);
+      this.x = x + random(-100, 100);
+      this.y = y + random(-100, 100);
       this.angle = random(TWO_PI);
       this.factor = 0.8 + random(0.4);
     }
