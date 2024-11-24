@@ -68,7 +68,6 @@ function setup() {
     width: bigDiv.width-2*padding,
     height: (bigDiv.height -topRect.height- gridHeight + 2*padding) / 1.5
   };
-  console.log(bigDiv.height - gridHeight)
 
   bigDivWidth = gridWidth + padding * 2;
   bigDivHeight = gridHeight + 300 * scaleFactor*2;
@@ -179,6 +178,11 @@ function drawUI() {
 
   drawButton(reloadButton, "Reload", false);
 
+  tint(255, 127);
+  image(refreshImg, bigDiv.x +10, reloadButton.y - 26.5, 50, 50);
+  image(headphoneImg, bigDiv.x + 70, reloadButton.y - 24.5, 45, 45);
+  image(infoImg, bigDiv.x + 130, reloadButton.y - 25.5, 48, 48);
+  noTint()
 }
 
 function drawButton(button, buttonText, buttonFlag) {
