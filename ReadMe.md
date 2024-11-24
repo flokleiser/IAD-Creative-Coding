@@ -10,5 +10,5 @@ ___
     - [ ] Change behavior of pixels not part of image
 
 - [ ] Project3:
-    - [ ] Button to increase/decrease cursor array
-    - [ ] --> +/-/ /2 / *2 etc
+    - [ ] "im not a robot" screen 
+    - [ ] captcha layout
