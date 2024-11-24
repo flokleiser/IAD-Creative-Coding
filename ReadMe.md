@@ -9,3 +9,7 @@ ___
 - [ ] Project1:
     - [x] Change grid animation 
     - [ ] Change behavior of pixels not part of image
+
+- [ ] Project3:
+    - [ ] Search more inspo
+    - [ ] Fix lock not drawing properly

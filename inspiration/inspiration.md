@@ -1,4 +1,4 @@
-# INSPIRATION INTERACTIVE TYPOGRAPHY
+## INTERACTIVE TYPOGRAPHY
 
 [Generative Type](https://generativetype.com/)
 
@@ -10,6 +10,16 @@
 
 ___
 
-# INSPIRATION MICRO INTERACTIONS 
+## MICRO INTERACTIONS 
+- hamburger menu falling down
+
+
+https://www.reddit.com/r/badUIbattles/comments/ug4cbj/a_cursor_controlled_by_a_fan/
+https://www.reddit.com/r/badUIbattles/comments/ehecou/an_etchasketch_ocr_phone_input_bring_out_your/
+https://www.reddit.com/r/badUIbattles/comments/txn7na/it_came_to_me_in_a_fever_dream_passwordle/
+https://www.reddit.com/r/badUIbattles/comments/ey74ya/volume_control_without_boundaries/
+https://www.reddit.com/r/badUIbattles/
+https://www.reddit.com/r/badUIbattles/comments/1gf2peq/click_to_cancel_escape_room/
+https://github.com/mkobuolys/flutter-design-challenges
 
 ![lock](./lock-thing.gif)
