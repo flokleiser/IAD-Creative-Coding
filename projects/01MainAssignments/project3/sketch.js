@@ -1,9 +1,12 @@
 let cursors = [];
 let followCursor;
+let button1Flag = false;
+let button2Flag = false
+let button1
+let button2
 
 
 function preload() {
-  // cursor = loadImage('assets/cursor.png');
   cursor = loadImage('assets/default.svg');
 }
 
@@ -57,9 +60,27 @@ class FollowCursor extends Cursor {
   }
 }
 
+function drawButton(button, buttonText, buttonFlag) {
+  rectMode(CENTER);
+  if (buttonFlag) {
+    fill(0, 255, 0);
+  } else {
+    fill(255, 0, 0);
+  }
+  rect(button.x, button.y, button.width, button.height, 10, 10, 10, 10);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(30);
+  text(buttonText, button.x, button.y);
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  const numCursors = 5;
+  // const numCursors = 35;
+  const numCursors = 2
+
+  button1 = { x: width / 2 - 150, y: height / 2, width: 200, height: 100 };
+  button2 = { x: width / 2 + 150, y: height / 2, width: 200, height: 100 };
 
   for (let i = 0; i < numCursors; i++) {
     cursors.push(new Cursor(width, height));
@@ -73,9 +94,8 @@ function setup() {
 function draw() {
   background(255);
 
-  rectMode(CENTER)
-  fill(100,100,100)
-  rect(width/2, height/2, 200, 100, 10,10,10,10) 
+  drawButton(button1, "Button 1", button1Flag);
+  drawButton(button2, "Button 2", button2Flag);
 
   cursors.forEach((cursor) => {
     cursor.draw();
@@ -89,9 +109,35 @@ function mouseMoved() {
     cursor.move(movement);
   });
 
-  followCursor.move({ x: mouseX, y: mouseY });
+  if (followCursor) {
+    followCursor.move({ x: mouseX, y: mouseY });
+  }
 }
 
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+function isInsideButton(x, y, button) {
+  return x > button.x - button.width / 2 &&
+         x < button.x + button.width / 2 &&
+         y > button.y - button.height / 2 &&
+         y < button.y + button.height / 2;
 }
+
+function isCursorOverButton(button) {
+  for (let cursor of cursors) {
+    if (isInsideButton(cursor.x, cursor.y, button)) {
+
+      return true;
+    }
+  }
+  return false;
+}
+
+function mousePressed() {
+  if (isInsideButton(mouseX, mouseY, button1) || isCursorOverButton(button1)) {
+    console.log("Button 1 pressed", button1Flag);
+    button1Flag = !button1Flag;
+  } else if (isInsideButton(mouseX, mouseY, button2)|| isCursorOverButton(button2)) {
+    button2Flag = !button2Flag;
+    console.log("Button 2 pressed", button2Flag);
+  }
+}
+
