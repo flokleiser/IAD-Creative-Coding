@@ -106,11 +106,6 @@ function draw() {
 
   drawUI()
 
-  textAlign(CENTER, CENTER);  
-  textSize(20);
-  fill(0);
-  text(`Fill at least ${winningPercentage * 100}% of the buttons to continue`, width / 2,50);
-
   for (let i = 0; i < buttons.length; i++) {
     drawButtonGrid(buttons[i],' ', buttonFlags[i]);
   }
@@ -119,7 +114,7 @@ function draw() {
   let percentage = (coloredCount / buttons.length) * 100;
   fill(0);
   textSize(20);
-  text(`Progress: ${round(percentage)}%`, width / 2, 100);
+  text(`Progress: ${round(percentage)}%`, width-75 , 25);
 
   if (coloredCount >= buttons.length * winningPercentage) {
     drawButton(reloadButton, "Continue", false);
@@ -134,18 +129,31 @@ function draw() {
 function drawUI() {
   rectMode(CORNER)
   noFill();
+  strokeWeight(2)
   stroke(0);
   rect(bigDiv.x, bigDiv.y, bigDiv.width, bigDiv.height);
 
-  fill(240);
+  // fill(240);
+  fill(80,170,255)	
   noStroke();
   rect(topRect.x, topRect.y, topRect.width, topRect.height);
 
-  fill(220);
+  fill(255);
+  // fill(80,170,255)	
   rect(bottomRect.x, bottomRect.y, bottomRect.width, bottomRect.height);
 
-}
+  // textAlign(CENTER, CENTER);  
+  textAlign(LEFT, CENTER);
+  textStyle(BOLD)
+  textSize(25);
+  fill(255);
+  text(`Fill at least`, (topRect.x + 7*padding), topRect.y + topRect.height/3 - 2*padding);
+  textSize(50);
+  text(`${winningPercentage * 100}%`,(topRect.x + 7*padding),topRect.y+topRect.height/2);
+  textSize(25);
+  text(`of the buttons to continue`, topRect.x + 7*padding,topRect.y+ topRect.height/1.5 + 2*padding);
 
+}
 
 function drawButton(button, buttonText, buttonFlag) {
   rectMode(CENTER);
@@ -159,10 +167,10 @@ function drawButton(button, buttonText, buttonFlag) {
 
 function drawButtonGrid(button, buttonText, buttonFlag) {
   rectMode(CENTER);
-  stroke(0)
+  // stroke(0)
   fill(buttonFlag ? color(0,250,0) : color(200,200,200));
 
-  rect(button.x, button.y, button.width, button.height, 5, 5, 5, 5);
+  rect(button.x, button.y, button.width, button.height, 2, 2, 2, 2);
   fill(255);
   textAlign(CENTER, CENTER);
   textSize(30);

@@ -11,4 +11,5 @@ ___
 
 - [ ] Project3:
     - [ ] "im not a robot" screen 
-    - [ ] captcha layout
+    - [x] captcha layout
+    - [ ] captcha icons
