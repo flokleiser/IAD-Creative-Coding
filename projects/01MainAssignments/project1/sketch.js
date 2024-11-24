@@ -19,7 +19,8 @@ function preload() {
 function setup() {
   //looks good: 1337 884
   createCanvas(windowWidth, windowHeight);
-  background(0);
+  // background(0)
+  background(255);
   textAlign(CENTER, CENTER);
   textFont(font);
   pixelDensity(1)
@@ -46,7 +47,8 @@ function setup() {
 }
 
 function draw() {
-  background(0);
+  // background(0);
+  background(255)
   let index = 0;
 
   mouseRadius = lerp(mouseRadius, targetRadius, 0.2);
@@ -55,8 +57,10 @@ function draw() {
     for (let y = gridSpacing / 2; y < height; y += gridSpacing) {
       for (let x = gridSpacing / 2; x < width; x += gridSpacing) {
         let letter = message[index % message.length];
-        fill(255);
-        stroke(255)
+        // fill(255);
+        fill(0)
+        // stroke(255)
+        // stroke(0)
 
         let distance = dist(mouseX, mouseY, x, y);
         let size = gridSpacing/width;
