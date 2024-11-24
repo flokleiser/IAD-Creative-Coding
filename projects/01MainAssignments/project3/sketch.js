@@ -28,6 +28,9 @@ let gridHeight
 
 function preload() {
   cursor = loadImage('assets/default.svg');
+  refreshImg = loadImage('assets/refresh.svg');
+  headphoneImg = loadImage('assets/headphones.svg');
+  infoImg = loadImage('assets/info.svg');
 }
 
 function setup() {
@@ -92,8 +95,6 @@ function setup() {
   extraButtonFlags.push(false);
 
   reloadButton = {x:bigDiv.width + bigDiv.width/1.71 + padding/4, y:bottomRect.y +5.65*padding, width:100, height:65}
-  // rect(bigDiv.width + bottomRect.width/2.5 + padding/4,bottomRect.y +5.5*padding,100,65,3,3,3,3)
-  // skipButton = { x: bottomRect.x, y: bottomRect.y, width: 100, height: 50 };
 
 
   for (let i = 0; i < numCursors; i++) {
@@ -130,7 +131,7 @@ function drawUI() {
   rectMode(CORNER)
   noFill();
   strokeWeight(2)
-  stroke(0);
+  stroke(0,0,0,100);
   rect(bigDiv.x, bigDiv.y, bigDiv.width, bigDiv.height);
 
   fill(80,170,255)	
@@ -156,7 +157,6 @@ function drawUI() {
   textSize(15);
   fill(80,170,255)	
   textAlign(CENTER, CENTER);
-  rect(bigDiv.width + 8*padding + bottomRect.width/2.5,bottomRect.y + padding,100,65,3,3,3,3)
   fill(255)
   // text("SKIP", bottomRect.width-5*padding + bottomRect.width/2.5 + 50, bottomRect.y +padding+ 32.5)
 
@@ -168,29 +168,31 @@ function drawUI() {
     fill(0)
     textSize(25)
     text("You are probably human", topRect.x + topRect.width/2, topRect.y + topRect.height + padding + gridHeight/2)
-    drawButton(reloadButton, "Reload", false);
   }
 
+  reloadButton = {
+    x: bigDiv.x + bigDiv.width - reloadButton.width / 2 - padding,
+    y: bigDiv.y + bigDiv.height - reloadButton.height / 2 - 2*padding,
+    width: 100,
+    height: 65
+  };
+
+  drawButton(reloadButton, "Reload", false);
 
 }
 
 function drawButton(button, buttonText, buttonFlag) {
   rectMode(CENTER);
-  // fill(mouseIsPressed? "#333333": color(80,170,255));
   fill(80,170,255)
   rect(button.x, button.y, button.width, button.height, 3, 3, 3, 3);
-  // rect(bigDiv.width + bottomRect.width/2.5 + padding/4,bottomRect.y +5.5*padding,100,65,3,3,3,3)
   fill(255);
   textAlign(CENTER, CENTER);
-  // textSize(50);
   textSize(20)
   text(buttonText, button.x, button.y);
-  // text("Reload", bottomRect.width-5*padding + bottomRect.width/2.5 + 50, bottomRect.y +padding+ 32.5)
 }
 
 function drawButtonGrid(button, buttonText, buttonFlag) {
   rectMode(CENTER);
-  // stroke(0)
   fill(buttonFlag ? color(0,250,0) : color(200,200,200));
 
   rect(button.x, button.y, button.width, button.height, 2, 2, 2, 2);
