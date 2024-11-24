@@ -4,7 +4,7 @@
 ___
 
 ### To-Do:
-- [ ] Project1 & Project2
+- [ ] Project1 & Project2
     - [x] Fix issue with pixeldensity on retina display
     - [x] Change grid animation 
     - [ ] Change behavior of pixels not part of image
