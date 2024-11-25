@@ -1,7 +1,4 @@
-// let message = "InteractionDesign";
 let message = "interactiondesign";
-// let mouseRadius = 200;
-// let targetRadius = 200;
 let mouseRadius = 100;
 let targetRadius = 100;
 let bigWordPixels = [];
@@ -34,9 +31,9 @@ function setup() {
   imgWidth = windowWidth>1000? 1200 : gridSpacing * 45;
   imgHeight = imgWidth
 
-    logoImg.resize(windowWidth,windowHeight)
-    logoImg.pixelDensity(1)
-    logoImg.loadPixels();
+  logoImg.resize(windowWidth,windowHeight)
+  logoImg.pixelDensity(1)
+  logoImg.loadPixels();
 }
 
 function draw() {
@@ -75,7 +72,6 @@ function draw() {
         let b = logoImg.pixels[pixelIndex + 2];
 
 
-
           //inside the radius
           if (distance < mouseRadius) {
             if (r < 128 && g < 128 && b < 128) {
@@ -95,6 +91,8 @@ function draw() {
             size += 4;
             // size += abs(sin((frameCount*0.05)+(x/2+y/2)*0.6) * 6)
           }
+
+          // let noiseValue = noise(x * 0.05, y * 0.05, frameCount * 0.05);
 
 
 
