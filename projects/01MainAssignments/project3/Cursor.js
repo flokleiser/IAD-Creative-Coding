@@ -1,13 +1,7 @@
 class Cursor {
-    // constructor(width, height) {
     constructor(width, height, x,y) {
       this.width = width;
       this.height = height;
-  
-      // this.x = random(width);
-      // this.y = random(height);
-      // this.x = x + random(-200, 200);
-      // this.y = y + random(-200, 200);
       this.x = x + random(-100, 100);
       this.y = y + random(-100, 100);
       this.angle = random(TWO_PI);
