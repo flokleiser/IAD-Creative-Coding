@@ -67,8 +67,13 @@ function draw() {
 
           let noiseValue = noise(x * noiseScale, y * noiseScale, noiseOffset);
 
-          let waveX = map(noiseValue, 0, 1, -15, 15);
-          let waveY = map(noiseValue, 0, 1, -15, 15);
+          // let waveX = map(noiseValue, 0, 1, -15, 15);
+          // let waveY = map(noiseValue, 0, 1, -15, 15);
+          let waveY = map(noiseValue, 0, 1, -50, 50);
+          let waveX = map(noiseValue, 0, 1, -50, 50);
+
+          // let waveX = noiseValue;
+          // let waveY = noiseValue 
 
           let finalX = x + waveX;
           let finalY = y + waveY;
