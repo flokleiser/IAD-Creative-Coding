@@ -19,10 +19,11 @@ let gridHeight
 let reloadButton;
 let skipButton;
 
-// let winningPercentage = 0.8;
 let winningPercentage = 0.8;
+// let winningPercentage = 0.2;
 
 let percentage 
+let coloredCount
 
 function preload() {
   cursor = loadImage('assets/default.svg');
@@ -104,15 +105,19 @@ function setup() {
 function draw() {
   background(255);
 
+
   for (let i = 0; i < buttons.length; i++) {
     drawButtonGrid(buttons[i],' ', buttonFlags[i]);
   }
 
   drawUI()
 
-  //percentage display
   let coloredCount = countColoredButtons();
   percentage = (coloredCount / buttons.length) * 100;
+
+  //percentage display
+  // let coloredCount = countColoredButtons();
+  // percentage = (coloredCount / buttons.length) * 100;
   fill(0);
   textSize(20);
   // text(`Progress: ${round(percentage)}%`, width-75 , 25);
@@ -126,6 +131,7 @@ function draw() {
 }
 
 function drawUI() {
+
   rectMode(CORNER)
   noFill();
   strokeWeight(2)
@@ -139,10 +145,15 @@ function drawUI() {
   //current percentage display
   fill(0,230,0, 150)	
   noStroke();
-  rect(topRect.x, topRect.y, topRect.width*(percentage/100), topRect.height);
+  // if (coloredCount >= buttons.length * winningPercentage) {
+    // rect(topRect.x, topRect.y, topRect.width,topRect.height);
+  // }
+  // else { 
+    rect(topRect.x, topRect.y, topRect.width*(percentage/100), topRect.height);
+  // }
 
 
-  // // goal displa
+  // // goal display (80% meter)
   // fill(0,230,0, 150)	
   // // stroke(0)
   // rect(topRect.x, topRect.y, topRect.width*(winningPercentage), topRect.height);
@@ -177,7 +188,7 @@ function drawUI() {
     // noStroke(0)
     fill(0)
     textSize(25)
-    text("You are probably human", topRect.x + topRect.width/2, topRect.y + topRect.height + padding + gridHeight/2)
+    text("Good enough,\n you are probably human", topRect.x + topRect.width/2, topRect.y + topRect.height + padding + gridHeight/2)
   }
 
   reloadButton = {
@@ -266,8 +277,9 @@ function mousePressed() {
     return;
   }
 
-  if (cursors.length < 25) {
+  if (cursors.length < 30) {
   cursors.push(new Cursor(width, height, mouseX, mouseY));
+  // cursors.push(new Cursor(width, height, mouseX, mouseY));
   } else {
     console.log('max')
   }

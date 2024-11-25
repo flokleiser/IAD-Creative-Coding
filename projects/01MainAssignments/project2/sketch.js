@@ -7,8 +7,8 @@ let logoImg;
 let imgAspectRatio;
 let imgWidth, imgHeight;
 let gridSpacing
-let blurAmount = 0
-let targetBlurAmount = 0;
+// let blurAmount = 0
+// let targetBlurAmount = 0;
 
 let mousePressedFlag = false;
 
@@ -53,7 +53,7 @@ function draw() {
   gridSpacing = min(windowWidth, windowHeight) / 40;
 
   mouseRadius = lerp(mouseRadius, targetRadius, 0.1);
-  blurAmount = lerp(blurAmount, targetBlurAmount, 0.1);
+  // blurAmount = lerp(blurAmount, targetBlurAmount, 0.1);
 
 
 
@@ -77,12 +77,12 @@ function draw() {
             let waveSpeed = frameCount * 0.05;
             let noiseScale = 0.005; 
 
-            if (mousePressedFlag) {
-              waveAmplitude = 10; 
+            // if (mousePressedFlag) {
+            //   waveAmplitude = 10; 
 
-            } else {
+            // } else {
                 waveAmplitude = 25; 
-            }
+            // }
       
             let waveX = sin((x * noiseScale) + waveSpeed) * waveAmplitude;
             let waveY = cos((y * noiseScale) + waveSpeed) * waveAmplitude;
@@ -111,20 +111,20 @@ function draw() {
         }
       }
 
-      if (blurAmount > 0) {
-        filter(BLUR, blurAmount);
-      }
+      // if (blurAmount > 0) {
+      //   filter(BLUR, blurAmount);
+      // }
 
 }
 
 function mousePressed() { 
   mousePressedFlag = true;
   targetRadius = 700;
-  targetBlurAmount = 3;
+  // targetBlurAmount = 3;
 }
 
 function mouseReleased() { 
   mousePressedFlag = false;
   targetRadius = 250;
-  targetBlurAmount = 0;
+  // targetBlurAmount = 0;
 }
