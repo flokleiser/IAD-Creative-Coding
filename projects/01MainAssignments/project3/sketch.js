@@ -34,6 +34,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  smooth()
   const numCursors = 0
   gridWidth= gridCols * (buttonWidth + padding) - padding;
   gridHeight = gridRows * (buttonHeight + padding) - padding;
