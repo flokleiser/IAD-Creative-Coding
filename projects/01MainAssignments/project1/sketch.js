@@ -1,7 +1,9 @@
-let message = "InteractionDesign";
-let bigWord = "ZHdK"
-let mouseRadius = 200;
-let targetRadius = 200;
+// let message = "InteractionDesign";
+let message = "interactiondesign";
+// let mouseRadius = 200;
+// let targetRadius = 200;
+let mouseRadius = 100;
+let targetRadius = 100;
 let bigWordPixels = [];
 let logoImg;
 let imgAspectRatio;
@@ -12,24 +14,16 @@ let targetBlurAmount = 0;
 
 function preload() {
   font = loadFont('assets/Neue-HaasGroteskDispW0496BlkIt.otf');
-  // logoImg = loadImage('assets/logo_slim.png');
   logoImg = loadImage('assets/logo_slim_square.png');
 }
 
 function setup() {
-  //looks good: 1337 884
   createCanvas(windowWidth, windowHeight);
-  // background(0)
   background(255);
   textAlign(CENTER, CENTER);
   textFont(font);
   pixelDensity(1)
 
-  // if (windowHeight < windowWidth) {
-  //   gridSpacing = windowHeight/50;
-  // } else {
-  //   gridSpacing = windowWidth/50;
-  // }
 
   gridSpacing = min(windowWidth, windowHeight) / 50;
 
@@ -37,7 +31,6 @@ function setup() {
 
   imgAspectRatio = logoImg.height / logoImg.width;
 
-  // imgWidth = gridSpacing * 45 
   imgWidth = windowWidth>1000? 1200 : gridSpacing * 45;
   imgHeight = imgWidth
 
@@ -86,16 +79,20 @@ function draw() {
           //inside the radius
           if (distance < mouseRadius) {
             if (r < 128 && g < 128 && b < 128) {
-              size += map(distance, 0, mouseRadius, 12, 6) + abs(sin((frameCount*0.05)+(x+y)*0.6) * 3);
+              size += map(distance, 0, mouseRadius, 8, 4) 
+              + abs(sin((frameCount*0.05)+(x+y)*0.6) * 3);
             } else {
               // size = 0.5 
-              size = map(distance/3, 0, mouseRadius, 0, 6);
+              if (mouseRadius < 500) {
+              size = map(distance/2, 0, mouseRadius, 0, 8);
+              } else {
+                size = map(distance/3, 0, mouseRadius, 0, 8);
+              }
             }
 
           //outside the radius
           } else {
-            size += 3;
-            //todo: change this
+            size += 4;
             // size += abs(sin((frameCount*0.05)+(x/2+y/2)*0.6) * 6)
           }
 
@@ -107,18 +104,12 @@ function draw() {
     }
   }
 
-  // if (blurAmount > 0) {
-  //   filter(BLUR, blurAmount);
-  // }
-
 }
 
 function mousePressed() { 
-  targetRadius = 650;
-  // targetBlurAmount = 2.5;
+  targetRadius = 500;
 }
 
 function mouseReleased() { 
-  targetRadius = 200;
-  // targetBlurAmount = 0
+  targetRadius = 100;
 }
