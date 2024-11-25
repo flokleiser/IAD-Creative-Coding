@@ -41,7 +41,6 @@ function draw() {
   let index = 0;
 
   gridSpacing = min(windowWidth, windowHeight) / 40, 10;
-
   mouseRadius = lerp(mouseRadius, targetRadius, 0.1);
 
     for (let y = gridSpacing / 2; y < height; y += gridSpacing) {
@@ -61,19 +60,13 @@ function draw() {
           let g = bigWordImg.pixels[pixelIndex + 1];
           let b = bigWordImg.pixels[pixelIndex + 2];
 
-          // let noiseScale = 0.005; 
           let nScale = 0.01; 
           let nOffset = frameCount * 0.01;
 
           let noiseValue = noise(x * nScale, y * nScale, nOffset);
 
-          // let waveX = map(noiseValue, 0, 1, -15, 15);
-          // let waveY = map(noiseValue, 0, 1, -15, 15);
           let waveY = map(noiseValue, 0, 1, -40, 40);
           let waveX = map(noiseValue, 0, 1, -40, 40);
-
-          // let waveX = noiseValue;
-          // let waveY = noiseValue 
 
           let finalX = x + waveX;
           let finalY = y + waveY;
