@@ -4,17 +4,9 @@ let buttons = []
 let buttonFlags = []
 let extraButtons = []
 let extraButtonFlags = []
-
 let bigDiv = {};
 let topRect = {}; 
 let bottomRect = {}; 
-
-let reloadButton;
-let skipButton;
-
-let winningPercentage = 0.8;
-// let winningPercentage = 0.2;
-
 
 let buttonWidth = 125;
 let buttonHeight = 125;
@@ -24,7 +16,13 @@ let padding = 7
 
 let gridWidth
 let gridHeight
+let reloadButton;
+let skipButton;
 
+// let winningPercentage = 0.8;
+let winningPercentage = 0.8;
+
+let percentage 
 
 function preload() {
   cursor = loadImage('assets/default.svg');
@@ -79,8 +77,6 @@ function setup() {
 
   let buttonStartX = bigDiv.x + (bigDiv.width - gridWidth) / 2 + buttonWidth / 2;
   let buttonStartY = topRect.y + topRect.height + buttonHeight / 2 + padding;
-  // buttons = []; // Clear buttons array to reset positions
-  // buttonFlags = []; // Clear flags
   for (let row = 0; row < gridRows; row++) {
     for (let col = 0; col < gridCols; col++) {
       let x = buttonStartX + col * (buttonWidth + padding);
@@ -114,11 +110,14 @@ function draw() {
 
   drawUI()
 
+  //percentage display
   let coloredCount = countColoredButtons();
-  let percentage = (coloredCount / buttons.length) * 100;
+  percentage = (coloredCount / buttons.length) * 100;
   fill(0);
   textSize(20);
-  text(`Progress: ${round(percentage)}%`, width-75 , 25);
+  // text(`Progress: ${round(percentage)}%`, width-75 , 25);
+  text(`${round(percentage)}%`, width-75 , 25);
+
 
   cursors.forEach((cursor) => {
     cursor.draw();
@@ -137,6 +136,18 @@ function drawUI() {
   noStroke();
   rect(topRect.x, topRect.y, topRect.width, topRect.height);
 
+  //current percentage display
+  fill(0,230,0, 150)	
+  noStroke();
+  rect(topRect.x, topRect.y, topRect.width*(percentage/100), topRect.height);
+
+
+  // // goal displa
+  // fill(0,230,0, 150)	
+  // // stroke(0)
+  // rect(topRect.x, topRect.y, topRect.width*(winningPercentage), topRect.height);
+  // noStroke()
+
   fill(255);
   rect(bottomRect.x, bottomRect.y, bottomRect.width, bottomRect.height);
 
@@ -149,7 +160,6 @@ function drawUI() {
   text(`${winningPercentage * 100}%`,(topRect.x + 7*padding),topRect.y+topRect.height/2);
   textSize(25);
   text(`of the squares to continue`, topRect.x + 7*padding,topRect.y+ topRect.height/1.5 + 2*padding);
-  // pop()
   
 
   textStyle(NORMAL)
@@ -157,13 +167,14 @@ function drawUI() {
   fill(80,170,255)	
   textAlign(CENTER, CENTER);
   fill(255)
-  // text("SKIP", bottomRect.width-5*padding + bottomRect.width/2.5 + 50, bottomRect.y +padding+ 32.5)
 
   let coloredCount = countColoredButtons();
   fill(255)
 
   if (coloredCount >= buttons.length * winningPercentage) {
+    // stroke(0)
     rect(topRect.x-padding/2,topRect.y+topRect.height,gridWidth+padding,gridHeight+2*padding)
+    // noStroke(0)
     fill(0)
     textSize(25)
     text("You are probably human", topRect.x + topRect.width/2, topRect.y + topRect.height + padding + gridHeight/2)
@@ -177,6 +188,7 @@ function drawUI() {
   };
 
   drawButton(reloadButton, "Reload", false);
+  drawButton(reloadButton, (coloredCount >= buttons.length * winningPercentage)?"Reload":'',false )
 
   tint(255, 127);
   image(refreshImg, bigDiv.x +10, reloadButton.y - 26.5, 50, 50);
@@ -248,14 +260,13 @@ function mousePressed() {
   let coloredCount = countColoredButtons();
 
   if (coloredCount >= buttons.length * winningPercentage) {
-    if (isInsideButton(mouseX, mouseY, reloadButton)) {
+    if (isInsideButton(mouseX, mouseY, reloadButton) || isCursorOverButton(reloadButton)) {
       window.location.reload();
     }
     return;
   }
 
   if (cursors.length < 25) {
-  // cursors.push(new Cursor(width, height));
   cursors.push(new Cursor(width, height, mouseX, mouseY));
   } else {
     console.log('max')
