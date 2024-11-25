@@ -62,15 +62,15 @@ function draw() {
           let b = bigWordImg.pixels[pixelIndex + 2];
 
           // let noiseScale = 0.005; 
-          let noiseScale = 0.01; 
-          let noiseOffset = frameCount * 0.01;
+          let nScale = 0.01; 
+          let nOffset = frameCount * 0.01;
 
-          let noiseValue = noise(x * noiseScale, y * noiseScale, noiseOffset);
+          let noiseValue = noise(x * nScale, y * nScale, nOffset);
 
           // let waveX = map(noiseValue, 0, 1, -15, 15);
           // let waveY = map(noiseValue, 0, 1, -15, 15);
-          let waveY = map(noiseValue, 0, 1, -50, 50);
-          let waveX = map(noiseValue, 0, 1, -50, 50);
+          let waveY = map(noiseValue, 0, 1, -40, 40);
+          let waveX = map(noiseValue, 0, 1, -40, 40);
 
           // let waveX = noiseValue;
           // let waveY = noiseValue 
