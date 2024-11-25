@@ -12,25 +12,21 @@ const friction = 0.9;
 let dialedNumbers = [];
 let currentDial = null;
 const numbers = [" ", 0, 9, 8, 7, 6, 5, 4, 3, 2, 1,"  "];
-// const snapAngles = [300, 270, 240, 210, 180, 150, 120, 90, 60, 30, 10, 0]; 
-const snapAngles = [360, 335, 299, 289, 259, 229, 199, 169, 139, 109, 90, 0]; 
-// const numbers = [0, 9, 8, 7, 6, 5, 4, 3, 2, 1,"  ", " "];
+const snapAngles = [360, 335, 305, 275, 245, 215, 185, 155, 125, 95, 75, 0]; 
 
 const snapAngle = 50
 const resetSpeed = 10
 
-const tolerance = 10; 
+const tolerance = 20; 
 
 function preload() {
-  font = loadFont('assets/Neue-HaasGroteskDispW0496BlkIt.otf');
+  // font = loadFont('assets/Neue-HaasGroteskDispW0496BlkIt.otf');
+  font = loadFont('assets/Maax Mono - Regular-205TF.otf')
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   angleMode(DEGREES);
-
-  mask = createGraphics(400, 400);
-  mask.angleMode(DEGREES);
 
   textFont(font);
 
@@ -40,11 +36,13 @@ function draw() {
   background(240);
   translate(width / 2, height / 2);
 
+
+  instructionText();
+  drawDialedNumbers();
   push();
   rotate(rotation);
   drawLock()  
   pop();
-  // drawIndicatorCircles();
   drawLockBackground();
 
 
@@ -60,43 +58,37 @@ function draw() {
       }
     }
   }
-  drawDialedNumbers();
 }
 
 function drawLockBackground() {
   noFill()
   ellipse(0, 0, 400, 400);
+
   for (let i = 0; i < numbers.length; i++) {
     const baseAngle = i * 30;
     const snapStopAngle = baseAngle + snapAngles[i]; 
 
-    const stopX = cos(radians(snapStopAngle)) * 200;
-    const stopY = sin(radians(snapStopAngle)) * 200;
+    // const stopX = cos(radians(snapStopAngle)) * 200;
+    // const stopY = sin(radians(snapStopAngle)) * 200;
 
     if (activeNumber === i) {
       fill(255, 0, 0, 150); 
     } else {
       fill(0, 0, 255, 50);
     }
-
-    noStroke();
-    ellipse(stopX, stopY, 10, 10);
   }
 
-  textSize(20);
-  textAlign(CENTER, CENTER);
+  textSize(25);
+  textStyle(BOLD); 
 
   for (let i = 0; i < numbers.length; i++) {
     const angle = map(i, 0, numbers.length, 0, 360);
-    // const x = cos(angle) * 200;
-    // const y = sin(angle) * 200;
     const x = cos(angle) * 175;
     const y = sin(angle) * 175;
     fill(activeNumber === i ? 0 : 50);
   
 
     if (numbers[i] === " ") {
-      // noFill();
       fill(150)
       stroke(255);
       circle(x, y, 40);
@@ -109,7 +101,6 @@ function drawLockBackground() {
 }
 
 function drawLock() {
-  // fill(200, 200, 200,50);  
   fill(50, 50, 50);  
   ellipse(0, 0, 450, 450);
 
@@ -123,15 +114,14 @@ function drawLock() {
     const angle = map(i, 0, 12, 0, 360);
     const x = cos(angle) * 175;
     const y = sin(angle) * 175;
-    // noFill();
     fill(255)
     stroke(255, 255, 255, 255);
     strokeWeight(2);
     circle(x, y, 75);
-       if (activeNumber === i) {
-      fill(255, 0, 0, 100);
-      ellipse(x, y, 75, 75);
-    }
+      if (activeNumber === i) {
+          fill(255, 0, 0, 100);
+          ellipse(x, y, 75, 75);
+      }
   }
 }
 
@@ -140,15 +130,41 @@ function getDialedNumber(angle) {
   const adjustedAngle = (angle + 360) % 360;
   const sectorSize = 360 / 12;
   const index = floor((adjustedAngle + sectorSize / 2) / sectorSize) % 12;
-  // console.log(index)
   return index;
+}
+
+function instructionText() {
+  fill(50);
+  textSize(20);
+  textAlign(CENTER, CENTER);
+  text("Please input your phone number:", 0, -300); 
+}
+
+function formatPhoneNumber(numbers) {
+  // const digits = numbers.join("");
+  // return digits
+  //   .replace(/^(\d{3})(\d{3})(\d{2})(\d{2})$/, "$1 $2 $3 $4")
+  //   .trim();
+  const digits = numbers.join("");
+  let formatted = "";
+
+  for (let i = 0; i < digits.length; i++) {
+    formatted += digits[i];
+    if (i === 2 || i === 5 || i === 7) {
+      formatted += " ";
+    }
+  }
+
+  return formatted.trim(); 
 }
 
 function drawDialedNumbers() {
   fill(0);
   textSize(30);
   textAlign(CENTER, CENTER);
-  text(dialedNumbers.join(""), 0, -250);
+
+  const formattedNumber = formatPhoneNumber(dialedNumbers);
+  text(formattedNumber, 0, -250);
 }
 
 function mousePressed() {
@@ -172,28 +188,16 @@ function mouseDragged() {
       rotation = initialRotation + angleDiff;
     }
 
-
-    // if (rotation >= snapAngle) {
-    //   currentDial = numbers[activeNumber]; 
-    //   console.log(activeNumber)
-    //   rotation = 0; 
-    //   isDragging = false;
-    //   rotation = -45;
-    // }
-
     const dynamicSnapAngle = snapAngles[activeNumber];
 
     console.log("Rotation:", rotation,"Snap Angle:", dynamicSnapAngle)
 
     if (rotation >= dynamicSnapAngle - tolerance) {
-      console.log('TEST')
+      console.log('TEST', activeNumber)
       currentDial = numbers[activeNumber];
-      console.log("Dialed:", activeNumber);
 
-      // rotation = 0;
       isDragging = false;
     }
-
   }
 }
 
@@ -219,30 +223,3 @@ function mouseInLockArea() {
   const distToCenter = dist(mouseX, mouseY, width / 2, height / 2);
   return distToCenter < 200; // Adjust lock size
 }
-
-// function drawIndicatorCircles() {
-//   const radius = 15;
-//   for (let i = 0; i < 4; i++) {
-//     fill(i < filledCircleCount ? 'black' : 'white');
-//     ellipse(-90 + i * 30, -200, radius, radius);
-//   }
-// }
-
-// function mouseOverLock() {
-//   if (isDragging && !isUnfilling) {
-//     filledCircleCount++;
-//     if (filledCircleCount >= 4) {
-//       isUnfilling = true;
-//       setTimeout(emptyCircles, 500);
-//     }
-//   }
-// }
-
-// function emptyCircles() {
-//   if (filledCircleCount > 0) {
-//     filledCircleCount--;
-//     setTimeout(emptyCircles, 100);
-//   } else {
-//     isUnfilling = false;
-//   }
-// }
