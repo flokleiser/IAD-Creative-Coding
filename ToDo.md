@@ -4,8 +4,8 @@
     - [x] Change grid animation 
     - [x] Change behavior of pixels not part of image
 
-- [ ] Project3:
-    - [ ] "im not a robot" screen 
+- [x] Project3:
+    - [x] "im not a robot" screen 
     - [x] captcha layout
     - [x] captcha icons
 

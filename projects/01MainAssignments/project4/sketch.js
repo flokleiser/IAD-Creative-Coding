@@ -22,6 +22,7 @@ const tolerance = 20;
 function preload() {
   font = loadFont('assets/Maax Mono - Regular-205TF.otf')
   boldFont = loadFont('assets/Maax Mono - Bold-205TF.otf')
+  sevenSegment = loadFont('assets/Seven Segment.otf')
 }
 
 function setup() {
@@ -36,6 +37,10 @@ function draw() {
   background(50)
   translate(width / 2, height / 2);
 
+  push()
+  rectMode(CENTER)
+  rect(0, -285,300,75,5,5,5,5);
+  pop()
 
   instructionText();
   drawDialedNumbers();
@@ -122,7 +127,6 @@ function drawLock() {
   }
 }
 
-
 function getDialedNumber(angle) {
   const adjustedAngle = (angle + 360) % 360;
   const sectorSize = 360 / 12;
@@ -166,21 +170,16 @@ function formatPhoneNumber(numbers) {
 }
 
 function drawDialedNumbers() {
-  fill(255)
-  textSize(30);
+  textFont(sevenSegment);
+  textSize(40);
+  fill(50)
   textAlign(CENTER, CENTER);
 
   const formattedNumber = formatPhoneNumber(dialedNumbers);
-  // text(formattedNumber, 0, -290);
-  if (boldFlag) {
-    textFont(boldFont);
-    text(formattedNumber, 0, -290);
-  }
-  else {
-    textFont(font);
-    textStyle(NORMAL);
-    text(formattedNumber, 0, -290);
-  }
+  text(formattedNumber, 0, -290);
+
+  textFont(font)
+
 }
 
 function mousePressed() {
@@ -204,11 +203,11 @@ function mouseDragged() {
       rotation = initialRotation + angleDiff;
     }
 
-    const dynamicSnapAngle = snapAngles[activeNumber];
+    const dynamicSnapAngle = snapAngles[activeNumber] || 0;
+    const updatedTolerance= activeNumber === 10 ? tolerance +7 : tolerance; 
 
-    if (rotation >= dynamicSnapAngle - tolerance) {
+    if (rotation >= dynamicSnapAngle - updatedTolerance&& rotation <= dynamicSnapAngle + updatedTolerance) {
       currentDial = numbers[activeNumber];
-
       isDragging = false;
     }
   }
