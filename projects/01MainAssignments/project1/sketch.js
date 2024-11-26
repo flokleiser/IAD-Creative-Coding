@@ -37,7 +37,6 @@ function setup() {
 }
 
 function draw() {
-  // background(0);
   background(255)
   let index = 0;
 
@@ -47,10 +46,7 @@ function draw() {
     for (let y = gridSpacing / 2; y < height; y += gridSpacing) {
       for (let x = gridSpacing / 2; x < width; x += gridSpacing) {
         let letter = message[index % message.length];
-        // fill(255);
         fill(0)
-        // stroke(255)
-        // stroke(0)
 
         let distance = dist(mouseX, mouseY, x, y);
         let size = gridSpacing/width;
@@ -76,9 +72,7 @@ function draw() {
           if (distance < mouseRadius) {
             if (r < 128 && g < 128 && b < 128) {
               size += map(distance, 0, mouseRadius, 10, 8) 
-              // + abs(sin((frameCount*0.05)+(x+y)*0.6) * 3);
             } else {
-              // size = 0.5 
               if (mouseRadius < 500) {
               size = map(distance/2, 0, mouseRadius, 0, 8);
               } else {
@@ -89,12 +83,7 @@ function draw() {
           //outside the radius
           } else {
             size += 4;
-            // size += abs(sin((frameCount*0.05)+(x/2+y/2)*0.6) * 6)
           }
-
-          // let noiseValue = noise(x * 0.05, y * 0.05, frameCount * 0.05);
-
-
 
         textSize(size * 4);
         text(letter, x, y - (textAscent() + textDescent()) / 4);
