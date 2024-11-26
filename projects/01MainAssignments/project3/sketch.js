@@ -1,3 +1,6 @@
+//TODO: setTimeout(() function
+//checkmark
+
 let cursors = [];
 let followCursor;
 let buttons = []
@@ -27,11 +30,17 @@ let currentPercentage
 let percentage 
 let coloredCount
 
+let startFlag = false
+// let startFlag = 
+
 function preload() {
   cursor = loadImage('assets/default.svg');
   refreshImg = loadImage('assets/refresh.svg');
   headphoneImg = loadImage('assets/headphones.svg');
   infoImg = loadImage('assets/info.svg');
+
+  captcha = loadImage('assets/recaptcha2.svg')
+  
 }
 
 function setup() {
@@ -95,6 +104,9 @@ function setup() {
 
   reloadButton = {x:bigDiv.width + bigDiv.width/1.71 + padding/4, y:bottomRect.y +5.65*padding, width:100, height:65}
 
+  checkMarkButton = {x:width/2 - 125,y:height/2,width:40,height:40}
+  // rect(-125, 0, 40, 40,2,2,2,2)  
+
 
   for (let i = 0; i < numCursors; i++) {
     cursors.push(new Cursor(width, height));
@@ -102,12 +114,36 @@ function setup() {
 
   followCursor = new FollowCursor(width, height);
 
-  noCursor(); 
+  // bigDiv = {
+  //   x: (width - bigDivWidth) / 2,
+  //   y: (height - bigDivHeight) / 2,
+  //   width: bigDivWidth,
+  //   height: bigDivHeight,
+  // };
+
+  // noCursor(); 
 }
 
 function draw() {
   background(255);
 
+  if (!startFlag) {
+    background(255)
+
+    rectMode(CENTER)
+    translate(width / 2, height / 2);
+    rect(0, 0, 350, 100,5,5,5,5)
+
+
+    textAlign(CENTER, CENTER)
+    textSize(23)
+    text("I'm not a robot", -20,0)
+
+    rect(-125, 0, 40, 40,2,2,2,2)  
+    image(captcha, +100, -20, 52, 50)
+  } else {
+
+    noCursor()
 
   for (let i = 0; i < buttons.length; i++) {
     drawButtonGrid(buttons[i],' ', buttonFlags[i]);
@@ -118,16 +154,11 @@ function draw() {
   let coloredCount = countColoredButtons();
   percentage = (coloredCount / buttons.length) * 100;
 
-  //percentage display
-  // fill(0);
-  // textSize(20);
-  // text(`${round(percentage)}%`, width-75 , 25);
-
-
-  cursors.forEach((cursor) => {
-    cursor.draw();
-  });
-  followCursor.draw();
+    cursors.forEach((cursor) => {
+      cursor.draw();
+    });
+    followCursor.draw();
+  }
 }
 
 function drawUI() {
@@ -258,6 +289,10 @@ function mouseMoved() {
 function mousePressed() {
   let coloredCount = countColoredButtons();
 
+  if (isInsideButton(mouseX, mouseY, checkMarkButton)) {
+    startFlag = true;
+  }
+
   if (coloredCount >= buttons.length * winningPercentage) {
     if (isInsideButton(mouseX, mouseY, reloadButton) || isCursorOverButton(reloadButton)) {
       window.location.reload();
@@ -265,13 +300,12 @@ function mousePressed() {
     return;
   }
 
-  if (cursors.length < 30) {
-  // if (cursors.length < 0) {
-  cursors.push(new Cursor(width, height, mouseX, mouseY));
-  // cursors.push(new Cursor(width, height, mouseX, mouseY));
-  } else {
-    console.log('max')
-  }
+  if (cursors.length < 30 && startFlag ) {
+    cursors.push(new Cursor(width, height, mouseX, mouseY));
+    } else {
+      console.log('max')
+    }
+  // }
 
   for (let i = 0; i < extraButtons.length; i++) {
     if (isInsideButton(mouseX, mouseY, extraButtons[i]) || isCursorOverButton(extraButtons[i])) {
