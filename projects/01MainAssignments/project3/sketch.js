@@ -20,7 +20,8 @@ let reloadButton;
 let skipButton;
 
 let winningPercentage = 0.8;
-// let winningPercentage = 0.2;
+// let winningPercentage = 0.75
+// let winningPercentage = 0.5;
 
 let percentage 
 let coloredCount
@@ -117,12 +118,9 @@ function draw() {
   percentage = (coloredCount / buttons.length) * 100;
 
   //percentage display
-  // let coloredCount = countColoredButtons();
-  // percentage = (coloredCount / buttons.length) * 100;
-  fill(0);
-  textSize(20);
-  // text(`Progress: ${round(percentage)}%`, width-75 , 25);
-  text(`${round(percentage)}%`, width-75 , 25);
+  // fill(0);
+  // textSize(20);
+  // text(`${round(percentage)}%`, width-75 , 25);
 
 
   cursors.forEach((cursor) => {
@@ -144,16 +142,11 @@ function drawUI() {
   rect(topRect.x, topRect.y, topRect.width, topRect.height);
 
   //current percentage display
-  // fill(0,230,0, 150)	
-  // noStroke();
-  // rect(topRect.x, topRect.y, topRect.width*(percentage/100), topRect.height);
+  fill(0,230,0, 150)	
+  noStroke();
+  let mappedWidth = map(percentage, 0, (winningPercentage * 100), 0, topRect.width-padding);
+  rect(topRect.x, topRect.y, mappedWidth, topRect.height);
 
-
-  // // goal display (80% meter)
-  // fill(0,230,0, 150)	
-  // // stroke(0)
-  // rect(topRect.x, topRect.y, topRect.width*(winningPercentage), topRect.height);
-  // noStroke()
 
   fill(255);
   rect(bottomRect.x, bottomRect.y, bottomRect.width, bottomRect.height);
@@ -179,9 +172,7 @@ function drawUI() {
   fill(255)
 
   if (coloredCount >= buttons.length * winningPercentage) {
-    // stroke(0)
     rect(topRect.x-padding/2,topRect.y+topRect.height,gridWidth+padding,gridHeight+2*padding)
-    // noStroke(0)
     fill(0)
     textSize(25)
     text("Good enough,\n you are probably human", topRect.x + topRect.width/2, topRect.y + topRect.height + padding + gridHeight/2)
@@ -197,7 +188,7 @@ function drawUI() {
   drawButton(reloadButton, "Reload", false);
   drawButton(reloadButton, (coloredCount >= buttons.length * winningPercentage)?"Reload":'',false )
 
-  tint(255, 127);
+  tint(255, 100);
   image(refreshImg, bigDiv.x +10, reloadButton.y - 26.5, 50, 50);
   image(headphoneImg, bigDiv.x + 70, reloadButton.y - 24.5, 45, 45);
   image(infoImg, bigDiv.x + 130, reloadButton.y - 25.5, 48, 48);
@@ -274,6 +265,7 @@ function mousePressed() {
   }
 
   if (cursors.length < 30) {
+  // if (cursors.length < 0) {
   cursors.push(new Cursor(width, height, mouseX, mouseY));
   // cursors.push(new Cursor(width, height, mouseX, mouseY));
   } else {
