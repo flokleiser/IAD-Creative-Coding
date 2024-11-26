@@ -65,7 +65,6 @@ function drawLockBackground() {
 
   for (let i = 0; i < numbers.length; i++) {
     const baseAngle = i * 30;
-    const snapStopAngle = baseAngle + snapAngles[i]; 
 
     if (activeNumber === i) {
       fill(255, 0, 0, 150); 

@@ -8,10 +8,12 @@ let bigDiv = {};
 let topRect = {}; 
 let bottomRect = {}; 
 
-let buttonWidth = 125;
-let buttonHeight = 125;
-let gridRows = 4;
-let gridCols = 4;
+// let buttonWidth = 125;
+// let buttonHeight = 125;
+let buttonWidth = 100;
+let buttonHeight = 100;
+let gridRows = 5;
+let gridCols = 5;
 let padding = 7 
 
 let gridWidth
@@ -23,6 +25,7 @@ let winningPercentage = 0.8;
 // let winningPercentage = 0.75
 // let winningPercentage = 0.5;
 
+let currentPercentage
 let percentage 
 let coloredCount
 
@@ -142,10 +145,10 @@ function drawUI() {
   rect(topRect.x, topRect.y, topRect.width, topRect.height);
 
   //current percentage display
-  fill(0,230,0, 150)	
-  noStroke();
-  let mappedWidth = map(percentage, 0, (winningPercentage * 100), 0, topRect.width-padding);
-  rect(topRect.x, topRect.y, mappedWidth, topRect.height);
+  // fill(0,230,0, 150)	
+  // noStroke();
+  // let mappedWidth = map(percentage, 0, (winningPercentage * 100), 0, topRect.width-padding);
+  // rect(topRect.x, topRect.y, mappedWidth, topRect.height);
 
 
   fill(255);
@@ -155,11 +158,11 @@ function drawUI() {
   textStyle(BOLD)
   textSize(25);
   fill(255);
-  text(`Fill at least`, (topRect.x + 7*padding), topRect.y + topRect.height/3 - 2*padding);
+  text(`Fill at least ${winningPercentage * 100}% to continue`, (topRect.x + 7*padding), topRect.y + padding + topRect.height/3 - 2*padding);
   textSize(50);
-  text(`${winningPercentage * 100}%`,(topRect.x + 7*padding),topRect.y+topRect.height/2);
-  textSize(25);
-  text(`of the squares to continue`, topRect.x + 7*padding,topRect.y+ topRect.height/1.5 + 2*padding);
+  text(`${round(percentage)}%`,(topRect.x + 7*padding),topRect.y+topRect.height/2+3*padding);
+  // textSize(25);
+  // text(`of the squares to continue`, topRect.x + 7*padding,topRect.y+ topRect.height/1.5 + 2*padding);
   
 
   textStyle(NORMAL)
