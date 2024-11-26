@@ -20,7 +20,6 @@ const resetSpeed = 10
 const tolerance = 20; 
 
 function preload() {
-  // font = loadFont('assets/Neue-HaasGroteskDispW0496BlkIt.otf');
   font = loadFont('assets/Maax Mono - Regular-205TF.otf')
 }
 
@@ -33,7 +32,8 @@ function setup() {
 }
 
 function draw() {
-  background(240);
+  // background(240);
+  background(50)
   translate(width / 2, height / 2);
 
 
@@ -73,6 +73,7 @@ function drawLockBackground() {
 
     if (activeNumber === i) {
       fill(255, 0, 0, 150); 
+      // fill(50,50,50,50)
     } else {
       fill(0, 0, 255, 50);
     }
@@ -85,11 +86,14 @@ function drawLockBackground() {
     const angle = map(i, 0, numbers.length, 0, 360);
     const x = cos(angle) * 175;
     const y = sin(angle) * 175;
-    fill(activeNumber === i ? 0 : 50);
+    // fill(activeNumber === i ? 255: 255);
+    fill(255)
   
 
     if (numbers[i] === " ") {
-      fill(150)
+      fill(100)
+      // fill(255)
+      // fill(50)
       stroke(255);
       circle(x, y, 40);
     } else {
@@ -101,10 +105,12 @@ function drawLockBackground() {
 }
 
 function drawLock() {
-  fill(50, 50, 50);  
+  // fill(50, 50, 50);  
+  fill(255)
   ellipse(0, 0, 450, 450);
 
-  fill(255)
+  // fill(255)
+  fill(50)
   ellipse(0, 0, 250, 250);
 
   textSize(20);
@@ -114,8 +120,10 @@ function drawLock() {
     const angle = map(i, 0, 12, 0, 360);
     const x = cos(angle) * 175;
     const y = sin(angle) * 175;
-    fill(255)
-    stroke(255, 255, 255, 255);
+    // fill(255)
+    fill(50)
+    // stroke(255, 255, 255, 255);
+    stroke(50)
     strokeWeight(2);
     circle(x, y, 75);
       if (activeNumber === i) {
@@ -134,10 +142,11 @@ function getDialedNumber(angle) {
 }
 
 function instructionText() {
-  fill(50);
+  // fill(50);
+  fill(255)
   textSize(20);
   textAlign(CENTER, CENTER);
-  text("Please input your phone number:", 0, -300); 
+  text("Please input your phone number:", 0, -350); 
 }
 
 function formatPhoneNumber(numbers) {
@@ -153,18 +162,27 @@ function formatPhoneNumber(numbers) {
     if (i === 2 || i === 5 || i === 7) {
       formatted += " ";
     }
+
+    if (digits.length === 10 && i === 9) {
+      // numbers.splice(10, 0, "-");
+      dialedNumbers = []
+      console.log('reset')
+    }
+
+
   }
 
   return formatted.trim(); 
 }
 
 function drawDialedNumbers() {
-  fill(0);
+  // fill(0);
+  fill(255)
   textSize(30);
   textAlign(CENTER, CENTER);
 
   const formattedNumber = formatPhoneNumber(dialedNumbers);
-  text(formattedNumber, 0, -250);
+  text(formattedNumber, 0, -290);
 }
 
 function mousePressed() {
@@ -190,10 +208,10 @@ function mouseDragged() {
 
     const dynamicSnapAngle = snapAngles[activeNumber];
 
-    console.log("Rotation:", rotation,"Snap Angle:", dynamicSnapAngle)
+    // console.log("Rotation:", rotation,"Snap Angle:", dynamicSnapAngle)
 
     if (rotation >= dynamicSnapAngle - tolerance) {
-      console.log('TEST', activeNumber)
+      // console.log('TEST', activeNumber)
       currentDial = numbers[activeNumber];
 
       isDragging = false;
@@ -206,7 +224,7 @@ function mouseReleased() {
     const stopAngle = activeNumber * 30 + snapAngles[activeNumber]; 
     if (rotation >= stopAngle - tolerance && rotation <= stopAngle + tolerance) {
       currentDial = numbers[activeNumber];
-      console.log('test')
+      // console.log('test')
     }
   }
   isDragging = false;

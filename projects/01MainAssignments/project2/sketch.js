@@ -1,104 +1,113 @@
-let message = "InteractionDesign";
-let bigWord = "ZHdK"
-let mouseRadius = 250;
-let targetRadius = 250;
+let message = "interactiondesign";
+let mouseRadius = 100;
+let targetRadius = 100;
 let bigWordPixels = [];
 let logoImg;
 let imgAspectRatio;
 let imgWidth, imgHeight;
-let gridSpacing
+let blurAmount = 0
+let targetBlurAmount = 0;
 
-let mousePressedFlag = false;
 
 function preload() {
   font = loadFont('assets/Neue-HaasGroteskDispW0496BlkIt.otf');
+  logoImg = loadImage('assets/logo_slim_square.png');
 }
 
 function setup() {
-  //lower framerate for less lag
-  frameRate(30);
   createCanvas(windowWidth, windowHeight);
-  background(0);
+  background(255);
   textAlign(CENTER, CENTER);
   textFont(font);
-
-  let textSizeFinal = windowWidth>1000? 500: windowWidth/3;
-
-  bigWordImg = createGraphics(windowWidth, windowHeight);
-  bigWordImg.textFont(font);
-  bigWordImg.pixelDensity(1)
-  bigWordImg.textSize(textSizeFinal);
-  bigWordImg.textAlign(CENTER, CENTER);
-  bigWordImg.background(0);
-  bigWordImg.fill(255);
-  bigWordImg.text(bigWord, bigWordImg.width / 2, bigWordImg.height / 2);
-  bigWordImg.loadPixels();
   pixelDensity(1)
+
+
+  gridSpacing = min(windowWidth, windowHeight) / 50;
+
+  console.log(gridSpacing)
+
+  imgAspectRatio = logoImg.height / logoImg.width;
+
+  imgWidth = windowWidth>1000? 1200 : gridSpacing * 45;
+  imgHeight = imgWidth
+
+  logoImg.resize(windowWidth,windowHeight)
+  logoImg.pixelDensity(1)
+  logoImg.loadPixels();
 }
 
 function draw() {
-  background(0);
+  // background(0);
+  background(255)
   let index = 0;
 
-  gridSpacing = min(windowWidth, windowHeight) / 40, 10;
-  mouseRadius = lerp(mouseRadius, targetRadius, 0.1);
+  mouseRadius = lerp(mouseRadius, targetRadius, 0.2);
+  blurAmount = lerp(blurAmount, targetBlurAmount, 0.1);
 
     for (let y = gridSpacing / 2; y < height; y += gridSpacing) {
       for (let x = gridSpacing / 2; x < width; x += gridSpacing) {
-          let letter = message[index % message.length];
-          fill(255);
-          stroke(255)
+        let letter = message[index % message.length];
+        // fill(255);
+        fill(0)
+        // stroke(255)
+        // stroke(0)
 
-          let distance = dist(mouseX, mouseY, x, y);
-          let size = gridSpacing/width;
+        let distance = dist(mouseX, mouseY, x, y);
+        let size = gridSpacing/width;
 
-          let imgX = floor(map(x, 0, width, 0, bigWordImg.width));
-          let imgY = floor(map(y, 0, height, 0, bigWordImg.height));
-          let pixelIndex = (imgY * bigWordImg.width + imgX) * 4;
+        let imgX = constrain(
+          floor(map(x, (width - imgWidth) / 2, (width + imgWidth) / 2, 0, logoImg.width)),
+          0,
+          logoImg.width - 1
+        );
+        let imgY = constrain(
+          floor(map(y, (height - imgHeight) / 2, (height + imgHeight) / 2, 0, logoImg.height)),
+          0,
+          logoImg.height - 1
+        );
 
-          let r = bigWordImg.pixels[pixelIndex];
-          let g = bigWordImg.pixels[pixelIndex + 1];
-          let b = bigWordImg.pixels[pixelIndex + 2];
+        let pixelIndex = (imgY * logoImg.width + imgX) * 4;
+        let r = logoImg.pixels[pixelIndex];
+        let g = logoImg.pixels[pixelIndex + 1];
+        let b = logoImg.pixels[pixelIndex + 2];
 
-          let nScale = 0.01; 
-          let nOffset = frameCount * 0.01;
 
-          let noiseValue = noise(x * nScale, y * nScale, nOffset);
-
-          let waveY = map(noiseValue, 0, 1, -40, 40);
-          let waveX = map(noiseValue, 0, 1, -40, 40);
-
-          let finalX = x + waveX;
-          let finalY = y + waveY;
-    
-          //inside radius
+          //inside the radius
           if (distance < mouseRadius) {
-              if (r < 128 && g < 128 && b < 128) {
-                size += map(distance, 0, mouseRadius, 12, 0);
-
-              } else {
-                size -= 1
-              }
-
+            if (r < 128 && g < 128 && b < 128) {
+              size += map(distance, 0, mouseRadius, 8, 4) 
+              + abs(sin((frameCount*0.05)+(x+y)*0.6) * 3);
             } else {
-              size += noiseValue * 2
+              // size = 0.5 
+              if (mouseRadius < 500) {
+              size = map(distance/2, 0, mouseRadius, 0, 8);
+              } else {
+                size = map(distance/3, 0, mouseRadius, 0, 8);
+              }
             }
-        
 
-          textSize(size * 4);
-          text(letter, finalX,finalY -(textAscent() + textDescent())/4)
+          //outside the radius
+          } else {
+            size += 4;
+            // size += abs(sin((frameCount*0.05)+(x/2+y/2)*0.6) * 6)
+          }
 
-          index++;
-      }
+          // let noiseValue = noise(x * 0.05, y * 0.05, frameCount * 0.05);
+
+
+
+        textSize(size * 4);
+        text(letter, x, y - (textAscent() + textDescent()) / 4);
+        index++;
     }
+  }
+
 }
 
 function mousePressed() { 
-  mousePressedFlag = true;
-  targetRadius = 700;
+  targetRadius = 500;
 }
 
 function mouseReleased() { 
-  mousePressedFlag = false;
-  targetRadius = 250;
+  targetRadius = 100;
 }

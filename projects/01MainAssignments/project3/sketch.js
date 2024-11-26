@@ -144,14 +144,9 @@ function drawUI() {
   rect(topRect.x, topRect.y, topRect.width, topRect.height);
 
   //current percentage display
-  fill(0,230,0, 150)	
-  noStroke();
-  // if (coloredCount >= buttons.length * winningPercentage) {
-    // rect(topRect.x, topRect.y, topRect.width,topRect.height);
-  // }
-  // else { 
-    rect(topRect.x, topRect.y, topRect.width*(percentage/100), topRect.height);
-  // }
+  // fill(0,230,0, 150)	
+  // noStroke();
+  // rect(topRect.x, topRect.y, topRect.width*(percentage/100), topRect.height);
 
 
   // // goal display (80% meter)
