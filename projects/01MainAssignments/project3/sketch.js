@@ -22,16 +22,14 @@ let gridHeight
 let reloadButton;
 let skipButton;
 
-let winningPercentage = 0.8;
-// let winningPercentage = 0.75
-// let winningPercentage = 0.5;
+let winningPercentage = 0.7;
 
 let currentPercentage
 let percentage 
 let coloredCount
 
 let startFlag = false
-// let startFlag = 
+let checkmarkFlag = false
 
 function preload() {
   cursor = loadImage('assets/default.svg');
@@ -113,15 +111,6 @@ function setup() {
   }
 
   followCursor = new FollowCursor(width, height);
-
-  // bigDiv = {
-  //   x: (width - bigDivWidth) / 2,
-  //   y: (height - bigDivHeight) / 2,
-  //   width: bigDivWidth,
-  //   height: bigDivHeight,
-  // };
-
-  // noCursor(); 
 }
 
 function draw() {
@@ -141,6 +130,28 @@ function draw() {
 
     rect(-125, 0, 40, 40,2,2,2,2)  
     image(captcha, +100, -20, 52, 50)
+
+    if (checkmarkFlag) {
+      stroke(0)
+      strokeWeight(1)
+      rect(-125, 0, 40, 40,2,2,2,2)  
+      rect(0, 0, 350, 100,5,5,5,5)
+      noStroke()
+
+      stroke(0,200,0);
+      strokeWeight(5);
+      translate(-5,0)
+      line(-135, -10, -125, 10);
+      line(-125, 10, -95, -15);
+      noStroke()
+
+      fill(0)
+      textSize(23)
+      text("I'm not a robot", -20,0)
+      noFill()
+
+    }
+
   } else {
 
     noCursor()
@@ -173,13 +184,6 @@ function drawUI() {
   noStroke();
   rect(topRect.x, topRect.y, topRect.width, topRect.height);
 
-  //current percentage display
-  // fill(0,230,0, 150)	
-  // noStroke();
-  // let mappedWidth = map(percentage, 0, (winningPercentage * 100), 0, topRect.width-padding);
-  // rect(topRect.x, topRect.y, mappedWidth, topRect.height);
-
-
   fill(255);
   rect(bottomRect.x, bottomRect.y, bottomRect.width, bottomRect.height);
 
@@ -190,8 +194,6 @@ function drawUI() {
   text(`Fill at least ${winningPercentage * 100}% to continue`, (topRect.x + 7*padding), topRect.y + padding + topRect.height/3 - 2*padding);
   textSize(50);
   text(`${round(percentage)}%`,(topRect.x + 7*padding),topRect.y+topRect.height/2+3*padding);
-  // textSize(25);
-  // text(`of the squares to continue`, topRect.x + 7*padding,topRect.y+ topRect.height/1.5 + 2*padding);
   
 
   textStyle(NORMAL)
@@ -290,7 +292,11 @@ function mousePressed() {
   let coloredCount = countColoredButtons();
 
   if (isInsideButton(mouseX, mouseY, checkMarkButton)) {
-    startFlag = true;
+    checkmarkFlag = true
+    setTimeout(() => {
+      console.log('test')
+      startFlag = true;
+    }, 1000)
   }
 
   if (coloredCount >= buttons.length * winningPercentage) {
@@ -314,11 +320,13 @@ function mousePressed() {
   }
 
 
-  for (let i = 0; i < buttons.length; i++) {
-    if (isInsideButton(mouseX, mouseY, buttons[i]) || isCursorOverButton(buttons[i])) {
-      buttonFlags[i] = !buttonFlags[i];
+  if (startFlag) {
+    for (let i = 0; i < buttons.length; i++) {
+      if (isInsideButton(mouseX, mouseY, buttons[i]) || isCursorOverButton(buttons[i])) {
+        buttonFlags[i] = !buttonFlags[i];
+      }
     }
-}
+  }
 }
 
 function mouseIsPressed() {

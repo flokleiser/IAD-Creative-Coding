@@ -34,7 +34,7 @@ class Cursor {
     }
   
     draw() {
-      image(cursor, this.x-11, this.y-11,cursor.width+10, cursor.height+10);
+      image(cursor, this.x-11, this.y-11,cursor.width+7, cursor.height+7);
       noStroke();
     }
   }
