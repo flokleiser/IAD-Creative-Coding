@@ -8,8 +8,6 @@ let bigDiv = {};
 let topRect = {}; 
 let bottomRect = {}; 
 
-// let buttonWidth = 125;
-// let buttonHeight = 125;
 let buttonWidth = 100;
 let buttonHeight = 100;
 let gridRows = 5;
