@@ -1,19 +1,19 @@
 class Cursor {
     constructor(width, height, x,y) {
+      this.angle = random(TWO_PI);
+      this.factor = 0.8 + random(0.4);
       this.width = width;
       this.height = height;
       this.x = x + random(-100, 100);
       this.y = y + random(-100, 100);
-      this.angle = random(TWO_PI);
-      this.factor = 0.8 + random(0.4);
     }
   
-    move(v) {
-      this.rotate(v);
-      this.scale(v);
+    move(newV) {
+      this.rotate(newV);
+      this.scale(newV);
   
-      this.x += v.x;
-      this.y += v.y;
+      this.x += newV.x;
+      this.y += newV.y;
   
       if (this.x < 0) this.x += this.width;
       if (this.y < 0) this.y += this.height;
@@ -21,28 +21,27 @@ class Cursor {
       this.y = this.y % this.height;
     }
   
-    rotate(v) {
-      const newX = v.x * cos(this.angle) - v.y * sin(this.angle);
-      const newY = v.x * sin(this.angle) + v.y * cos(this.angle);
-      v.x = newX;
-      v.y = newY;
+    rotate(newV) {
+      const newX = newV.x * cos(this.angle) - newV.y * sin(this.angle);
+      const newY = newV.x * sin(this.angle) + newV.y * cos(this.angle);
+      newV.x = newX;
+      newV.y = newY;
     }
   
-    scale(v) {
-      v.x *= this.factor;
-      v.y *= this.factor;
+    scale(newV) {
+      newV.x *= this.factor;
+      newV.y *= this.factor;
     }
   
     draw() {
-  
       image(cursor, this.x-11, this.y-11,cursor.width+10, cursor.height+10);
       noStroke();
     }
   }
   
   class FollowCursor extends Cursor {
-    move(e) {
-      this.x = e.x;
-      this.y = e.y;
+    move(cursor) {
+      this.x = cursor.x;
+      this.y = cursor.y;
     }
   }

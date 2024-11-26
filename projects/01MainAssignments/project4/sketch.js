@@ -32,7 +32,6 @@ function setup() {
 }
 
 function draw() {
-  // background(240);
   background(50)
   translate(width / 2, height / 2);
 
@@ -68,12 +67,8 @@ function drawLockBackground() {
     const baseAngle = i * 30;
     const snapStopAngle = baseAngle + snapAngles[i]; 
 
-    // const stopX = cos(radians(snapStopAngle)) * 200;
-    // const stopY = sin(radians(snapStopAngle)) * 200;
-
     if (activeNumber === i) {
       fill(255, 0, 0, 150); 
-      // fill(50,50,50,50)
     } else {
       fill(0, 0, 255, 50);
     }
@@ -86,14 +81,11 @@ function drawLockBackground() {
     const angle = map(i, 0, numbers.length, 0, 360);
     const x = cos(angle) * 175;
     const y = sin(angle) * 175;
-    // fill(activeNumber === i ? 255: 255);
     fill(255)
   
 
     if (numbers[i] === " ") {
       fill(100)
-      // fill(255)
-      // fill(50)
       stroke(255);
       circle(x, y, 40);
     } else {
@@ -105,11 +97,9 @@ function drawLockBackground() {
 }
 
 function drawLock() {
-  // fill(50, 50, 50);  
   fill(255)
   ellipse(0, 0, 450, 450);
 
-  // fill(255)
   fill(50)
   ellipse(0, 0, 250, 250);
 
@@ -120,9 +110,7 @@ function drawLock() {
     const angle = map(i, 0, 12, 0, 360);
     const x = cos(angle) * 175;
     const y = sin(angle) * 175;
-    // fill(255)
     fill(50)
-    // stroke(255, 255, 255, 255);
     stroke(50)
     strokeWeight(2);
     circle(x, y, 75);
@@ -142,7 +130,6 @@ function getDialedNumber(angle) {
 }
 
 function instructionText() {
-  // fill(50);
   fill(255)
   textSize(20);
   textAlign(CENTER, CENTER);
@@ -164,19 +151,15 @@ function formatPhoneNumber(numbers) {
     }
 
     if (digits.length === 10 && i === 9) {
-      // numbers.splice(10, 0, "-");
       dialedNumbers = []
       console.log('reset')
     }
-
-
   }
 
   return formatted.trim(); 
 }
 
 function drawDialedNumbers() {
-  // fill(0);
   fill(255)
   textSize(30);
   textAlign(CENTER, CENTER);
@@ -208,10 +191,7 @@ function mouseDragged() {
 
     const dynamicSnapAngle = snapAngles[activeNumber];
 
-    // console.log("Rotation:", rotation,"Snap Angle:", dynamicSnapAngle)
-
     if (rotation >= dynamicSnapAngle - tolerance) {
-      // console.log('TEST', activeNumber)
       currentDial = numbers[activeNumber];
 
       isDragging = false;
@@ -224,7 +204,6 @@ function mouseReleased() {
     const stopAngle = activeNumber * 30 + snapAngles[activeNumber]; 
     if (rotation >= stopAngle - tolerance && rotation <= stopAngle + tolerance) {
       currentDial = numbers[activeNumber];
-      // console.log('test')
     }
   }
   isDragging = false;
@@ -239,5 +218,5 @@ function calculateAngle(x, y) {
 
 function mouseInLockArea() {
   const distToCenter = dist(mouseX, mouseY, width / 2, height / 2);
-  return distToCenter < 200; // Adjust lock size
+  return distToCenter < 200;
 }
