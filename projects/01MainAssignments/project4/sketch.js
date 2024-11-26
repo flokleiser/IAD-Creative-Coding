@@ -4,8 +4,8 @@ let rotation = 0;
 let initialRotation = 0;
 let dragStartAngle = 0;
 let velocity = 0;
-let filledCircleCount = 0;
-let isUnfilling = false;
+let boldFlag = false
+
 
 const friction = 0.9;
 
@@ -21,6 +21,7 @@ const tolerance = 20;
 
 function preload() {
   font = loadFont('assets/Maax Mono - Regular-205TF.otf')
+  boldFont = loadFont('assets/Maax Mono - Bold-205TF.otf')
 }
 
 function setup() {
@@ -110,11 +111,12 @@ function drawLock() {
     const x = cos(angle) * 175;
     const y = sin(angle) * 175;
     fill(50)
-    stroke(50)
+    // stroke(50)
     strokeWeight(2);
     circle(x, y, 75);
       if (activeNumber === i) {
-          fill(255, 0, 0, 100);
+          // fill(255, 0, 0, 100);
+          fill(255, 255, 255, 100);
           ellipse(x, y, 75, 75);
       }
   }
@@ -129,6 +131,7 @@ function getDialedNumber(angle) {
 }
 
 function instructionText() {
+  textFont(font);
   fill(255)
   textSize(20);
   textAlign(CENTER, CENTER);
@@ -149,9 +152,13 @@ function formatPhoneNumber(numbers) {
       formatted += " ";
     }
 
-    if (digits.length === 10 && i === 9) {
-      dialedNumbers = []
-      console.log('reset')
+      if (digits.length === 10 && i === 9) {
+      // if (digits.length === 3 && i === 2) {
+        boldFlag = true
+        setTimeout(() => {
+          dialedNumbers = []
+          boldFlag= false
+        },2000)
     }
   }
 
@@ -164,7 +171,16 @@ function drawDialedNumbers() {
   textAlign(CENTER, CENTER);
 
   const formattedNumber = formatPhoneNumber(dialedNumbers);
-  text(formattedNumber, 0, -290);
+  // text(formattedNumber, 0, -290);
+  if (boldFlag) {
+    textFont(boldFont);
+    text(formattedNumber, 0, -290);
+  }
+  else {
+    textFont(font);
+    textStyle(NORMAL);
+    text(formattedNumber, 0, -290);
+  }
 }
 
 function mousePressed() {
