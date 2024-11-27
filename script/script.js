@@ -36,29 +36,8 @@ function createProjectCard() {
       let childId = student.projects[i].folder + (j + 1);
 
       let titleColor = (j % 2 === 0) ? "black" : "white";
+      let titleBackgroundColor = (j === 1) ? "rgba(0,0,0,0.75)" : (j === 0 ? "rgba(255,255,255,0.75)" : " ");
      
-  //     articles.push(`
-  //         <div class="card" id="${childId}" onclick="openProject()"
-  //           style="background: url(./projects/${
-  //             student.projects[i].folder
-  //           // }/project${j + 1}/thumbnail.${
-  //           }/project${j + 1}/thumbnail.png) center center/cover">
-  //       student.thumbnailExtension
-  //     }) center center/cover">
-  //           <div class="project-info">
-  //             <div class="project-bio">
-  //               <h3 style="color: ${titleColor};">project${j + 1}</h3>
-  //             </div>
-  //           </div>
-  //         </div>
-  //       `);
-  //   }
-  //   article.innerHTML = articles.join("");
-  //   document
-  //     .querySelector(`[id="${student.projects[i].folder}"]`)
-  //     .appendChild(article);
-  // }
-
       articles.push(`
         <div class="card" id="${childId}"  onclick="openProject()"
           style="background: url(./projects/${
@@ -66,7 +45,7 @@ function createProjectCard() {
           }/project${j + 1}/thumbnail.png) center center/cover">
           <div class="project-info">
             <div class="project-bio">
-              <h3 style="color: ${titleColor};">project${j + 1}</h3>
+              <h3 style="color: ${titleColor}; background-color: ${titleBackgroundColor}">project${j + 1}</h3>
             </div>
           </div>
         </div>
