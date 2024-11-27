@@ -19,7 +19,6 @@ let gridHeight
 let reloadButton;
 let skipButton;
 
-// let winningPercentage = 0.7;
 let winningPercentage = 0.75;
 
 let currentPercentage
