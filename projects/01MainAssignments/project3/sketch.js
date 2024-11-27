@@ -1,6 +1,3 @@
-//TODO: setTimeout(() function
-//checkmark
-
 let cursors = [];
 let followCursor;
 let buttons = []
@@ -116,42 +113,6 @@ function setup() {
 function draw() {
   background(255);
 
-  // if (!startFlag) {
-  //   background(255)
-
-  //   rectMode(CENTER)
-  //   translate(width / 2, height / 2);
-  //   rect(0, 0, 350, 100,5,5,5,5)
-
-
-  //   textAlign(CENTER, CENTER)
-  //   textSize(23)
-  //   text("I'm not a robot", -20,0)
-
-  //   rect(-125, 0, 40, 40,2,2,2,2)  
-  //   image(captcha, +100, -20, 52, 50)
-
-  //   if (checkmarkFlag) {
-
-  //     push()
-  //     // fill(255)
-  //     // rect(0, 0, 350, 100,5,5,5,5)
-  //     // noFill()
-  //     pop()
-
-  //     stroke(0,200,0);
-  //     strokeWeight(5);
-  //     translate(-5,0)
-  //     line(-135, -10, -125, 10);
-  //     line(-125, 10, -95, -15);
-  //     noStroke()
-  //     stroke(0)
-  //     strokeWeight(1)
-  //     noStroke()
-  //   }
-
-  // } 
-
   if (!startFlag) {
     rectMode(CENTER);
     translate(width / 2, height / 2);
@@ -167,16 +128,9 @@ function draw() {
       stroke(0, 200, 0);
       strokeWeight(5);
       noFill();
-      // translate(-5, 0);
-      // line(-135, -10, -125, 10);
-      // line(-125, 10, -95, -15);
-
-      beginShape();
-      vertex(-135, -5);  
-      vertex(-125, 10); 
-      vertex(-110, -15);
-      endShape();
-
+      translate(-5, 0);
+      line(-135, -10, -125, 10);
+      line(-125, 10, -100, -25);
 
       pop();
     } else {
