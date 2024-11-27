@@ -28,6 +28,8 @@ let coloredCount
 let startFlag = false
 let checkmarkFlag = false
 
+let cursorFlag = true 
+
 function preload() {
   cursor = loadImage('assets/default.svg');
   refreshImg = loadImage('assets/refresh.svg');
@@ -294,7 +296,7 @@ function mousePressed() {
     return;
   }
 
-  if (cursors.length < 30 && startFlag ) {
+  if (cursors.length < 30 && startFlag && cursorFlag)  {
     cursors.push(new Cursor(width, height, mouseX, mouseY));
     } else {
       console.log('max')
@@ -314,4 +316,16 @@ function mousePressed() {
       }
     }
   }
+}
+
+
+function keyPressed() {
+  if (keyCode === 32) { 
+    cursorFlag = !cursorFlag
+    console.log('Cursors', cursorFlag)
+  }
+  if (!cursorFlag) {
+    cursors.splice(0, cursors.length);
+  }
+  
 }
