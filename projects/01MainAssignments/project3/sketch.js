@@ -19,7 +19,8 @@ let gridHeight
 let reloadButton;
 let skipButton;
 
-let winningPercentage = 0.7;
+// let winningPercentage = 0.7;
+let winningPercentage = 0.75;
 
 let currentPercentage
 let percentage 
@@ -131,6 +132,7 @@ function draw() {
       translate(-5, 0);
       line(-135, -10, -125, 10);
       line(-125, 10, -100, -25);
+
 
       pop();
     } else {
@@ -298,7 +300,6 @@ function mousePressed() {
     } else {
       console.log('max')
     }
-  // }
 
   for (let i = 0; i < extraButtons.length; i++) {
     if (isInsideButton(mouseX, mouseY, extraButtons[i]) || isCursorOverButton(extraButtons[i])) {
