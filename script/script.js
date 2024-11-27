@@ -16,53 +16,9 @@ fetch("student.json")
     console.error("There was a problem fetching the data:", error);
   });
 
-// function createProjectCard() {
-//   document.querySelector(".header-container h2").innerHTML = student.name;
-//   for (let i = 0; i < student.projects.length; i++) {
-//     //loop through each project inside projects
-//     let section = document.createElement("section");
-//     let articles = [];
-//     section.id = `${student.projects[i].folder}`;
-//     section.classList.add("project-container", "container");
-//     section.innerHTML = `
-//       <div class="division"></div>
-//       <div class="content-text">
-//         <h1>${student.projects[i].folder}</h1>
-//       </div>`;
-//     document.querySelector(".projects-container").appendChild(section);
-//     let article = document.createElement("article");
-//     article.classList.add("project");
-
-//     for (let j = 0; j < student.projects[i].projectNumber; j++) {
-//       let childId = student.projects[i].folder + (j + 1);
-     
-//       articles.push(`
-//           <div class="card" id="${childId}" onclick="openProject()"
-//             style="background: url(./projects/${
-//               student.projects[i].folder
-//             }/project${j + 1}/thumbnail.${
-//         student.thumbnailExtension
-//       }) center center/cover">
-//             <div class="project-info">
-//               <div class="project-bio">
-//                 <h3>project${j + 1}</h3>
-//               </div>
-//             </div>
-//           </div>
-//         `);
-//     }
-//     article.innerHTML = articles.join("");
-//     document
-//       .querySelector(`[id="${student.projects[i].folder}"]`)
-//       .appendChild(article);
-//   }
-// }
-
 function createProjectCard() {
   document.querySelector(".header-container h2").innerHTML = student.name;
-
   for (let i = 0; i < student.projects.length; i++) {
-    // Create project container
     let section = document.createElement("section");
     let articles = [];
     section.id = `${student.projects[i].folder}`;
@@ -73,16 +29,38 @@ function createProjectCard() {
         <h1>${student.projects[i].folder}</h1>
       </div>`;
     document.querySelector(".projects-container").appendChild(section);
-
     let article = document.createElement("article");
     article.classList.add("project");
 
     for (let j = 0; j < student.projects[i].projectNumber; j++) {
       let childId = student.projects[i].folder + (j + 1);
+
       let titleColor = (j % 2 === 0) ? "black" : "white";
+     
+  //     articles.push(`
+  //         <div class="card" id="${childId}" onclick="openProject()"
+  //           style="background: url(./projects/${
+  //             student.projects[i].folder
+  //           // }/project${j + 1}/thumbnail.${
+  //           }/project${j + 1}/thumbnail.png) center center/cover">
+  //       student.thumbnailExtension
+  //     }) center center/cover">
+  //           <div class="project-info">
+  //             <div class="project-bio">
+  //               <h3 style="color: ${titleColor};">project${j + 1}</h3>
+  //             </div>
+  //           </div>
+  //         </div>
+  //       `);
+  //   }
+  //   article.innerHTML = articles.join("");
+  //   document
+  //     .querySelector(`[id="${student.projects[i].folder}"]`)
+  //     .appendChild(article);
+  // }
 
       articles.push(`
-        <div class="card" id="${childId}" 
+        <div class="card" id="${childId}"  onclick="openProject()"
           style="background: url(./projects/${
             student.projects[i].folder
           }/project${j + 1}/thumbnail.png) center center/cover">
@@ -114,7 +92,6 @@ function createProjectCard() {
     });
   }
 }
-
 
 function fileExists(url) {
   var http = new XMLHttpRequest();
