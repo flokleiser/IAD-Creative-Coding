@@ -116,45 +116,78 @@ function setup() {
 function draw() {
   background(255);
 
+  // if (!startFlag) {
+  //   background(255)
+
+  //   rectMode(CENTER)
+  //   translate(width / 2, height / 2);
+  //   rect(0, 0, 350, 100,5,5,5,5)
+
+
+  //   textAlign(CENTER, CENTER)
+  //   textSize(23)
+  //   text("I'm not a robot", -20,0)
+
+  //   rect(-125, 0, 40, 40,2,2,2,2)  
+  //   image(captcha, +100, -20, 52, 50)
+
+  //   if (checkmarkFlag) {
+
+  //     push()
+  //     // fill(255)
+  //     // rect(0, 0, 350, 100,5,5,5,5)
+  //     // noFill()
+  //     pop()
+
+  //     stroke(0,200,0);
+  //     strokeWeight(5);
+  //     translate(-5,0)
+  //     line(-135, -10, -125, 10);
+  //     line(-125, 10, -95, -15);
+  //     noStroke()
+  //     stroke(0)
+  //     strokeWeight(1)
+  //     noStroke()
+  //   }
+
+  // } 
+
   if (!startFlag) {
-    background(255)
-
-    rectMode(CENTER)
+    rectMode(CENTER);
     translate(width / 2, height / 2);
-    rect(0, 0, 350, 100,5,5,5,5)
 
+    rect(0, 0, 350, 100, 5, 5, 5, 5);
 
-    textAlign(CENTER, CENTER)
-    textSize(23)
-    text("I'm not a robot", -20,0)
-
-    rect(-125, 0, 40, 40,2,2,2,2)  
-    image(captcha, +100, -20, 52, 50)
+    textAlign(CENTER, CENTER);
+    textSize(23);
+    text("I'm not a robot", -20, 0);
 
     if (checkmarkFlag) {
-      stroke(0)
-      strokeWeight(1)
-      rect(-125, 0, 40, 40,2,2,2,2)  
-      rect(0, 0, 350, 100,5,5,5,5)
-      noStroke()
-
-      stroke(0,200,0);
+      push();
+      stroke(0, 200, 0);
       strokeWeight(5);
-      translate(-5,0)
-      line(-135, -10, -125, 10);
-      line(-125, 10, -95, -15);
-      noStroke()
+      noFill();
+      // translate(-5, 0);
+      // line(-135, -10, -125, 10);
+      // line(-125, 10, -95, -15);
 
-      fill(0)
-      textSize(23)
-      text("I'm not a robot", -20,0)
-      noFill()
+      beginShape();
+      vertex(-135, -5);  
+      vertex(-125, 10); 
+      vertex(-110, -15);
+      endShape();
 
+
+      pop();
+    } else {
+      rect(-125, 0, 40, 40, 2, 2, 2, 2);
     }
 
-  } else {
+    image(captcha, +100, -20, 52, 50);
+  }
+  else {
 
-    noCursor()
+  noCursor()
 
   for (let i = 0; i < buttons.length; i++) {
     drawButtonGrid(buttons[i],' ', buttonFlags[i]);
@@ -328,12 +361,3 @@ function mousePressed() {
     }
   }
 }
-
-function mouseIsPressed() {
-  for (let i = 0; i < extraButtons.length; i++) {
-    if (isInsideButton(mouseX, mouseY, extraButtons[i]) || isCursorOverButton(extraButtons[i])) {
-      extraButtonFlags[i] = true
-    }
-  }
-}
-
