@@ -42,7 +42,7 @@ function createProjectCard() {
         <div class="card" id="${childId}"  onclick="openProject()"
           style="background: url(./projects/${
             student.projects[i].folder
-          }/project${j + 1}/thumbnail.png) center center/cover">
+          }/project${j + 1}/thumbnail.webp) center center/cover">
           <div class="project-info">
             <div class="project-bio">
               <h3 style="color: ${titleColor}; background-color: ${titleBackgroundColor}">project${j + 1}</h3>
