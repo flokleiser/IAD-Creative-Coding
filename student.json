@@ -4,7 +4,8 @@
     "projects": [ 
         {
         "folder" : "01MainAssignments",
-        "projectNumber":"4"
+        "projectNumber":"4",
+        "projectNames": ["Typography 1", "Typography 2", "Micro-Interaction 1", "Micro-Interaction 2"]
         }
   ]
 }
