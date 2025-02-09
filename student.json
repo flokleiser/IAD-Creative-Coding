@@ -3,9 +3,16 @@
     "thumbnailExtension": "png",
     "projects": [ 
         {
-        "folder" : "01MainAssignments",
-        "projectNumber":"4",
-        "projectNames": ["Typography 1", "Typography 2", "Micro-Interaction 1", "Micro-Interaction 2"]
+            "folder" : "01MainAssignments",
+            "startNumber": 1,
+            "projectNumber":"4",
+            "projectNames": ["Typography 1", "Typography 2", "Micro-Interaction 1", "Micro-Interaction 2"]
+        },
+        {
+            "folder" : "02Other",
+            "startNumber": 5,
+            "projectNumber":"4",
+            "projectNames": ["Tiles", "ASCII", "Lorenz-Attractor", "Petals"]
         }
   ]
 }
