@@ -1,51 +1,55 @@
+let cols, rows
 let scale = 20;
-let spacing = 30
+let spacing = 40
 let gridCoords = []
 let mouseRadius = 100
 let targetRadius = 100  
 let fr
 
+let squareSize = 30
 let squareColor = 50
+
+let noiseValue
+let noiseBuffer
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
     background(0);
     cols = windowWidth / scale;
     rows = windowHeight / scale;
+
+    for (let i = 0; i < width + 20; i += spacing ) {
+        for (let j = 0; j < height + 20; j += spacing) {
+            gridCoords.push([i,j])
+        }
+    }
+    noiseValue = noise(0.1)
+
+    noiseBuffer = createGraphics(windowWidth, windowHeight)
+
 }
 
 function draw() {
-    // colorChange();
     background(0)
     fill(50)
-    noStroke()
+
+    let xValue = mouseX
+    let yValue = mouseY
 
     mouseRadius = lerp(mouseRadius, targetRadius, 0.1)
+    rectMode(CENTER)
 
-    for (let i = 0; i < width; i += spacing ) {
-        for (let j = 0; j < height; j += spacing) {
-            gridCoords.push([i,j])
-
-            let distance = dist(mouseX,mouseY,i,j)
-            if (distance < mouseRadius) {
-                fill(255)
-                square(i,j,spacing/1.5)
-            }
-
-            else {
-                fill(50)
-                square(i,j,spacing/1.5)
-            }
-
-            // for (x = 0; x < gridCoords.length; x++) {
-            //         fill(random(255),random(255),random(255))
-            //         square(i,j,spacing/1.5)
-            //     }
-            square(gridCoords[i][0],gridCoords[i][1],spacing/1.5)
-
+    for (let i = 0; i < gridCoords.length; i++) {
+        let distance = dist(xValue,yValue,gridCoords[i][0],gridCoords[i][1])
+        if (distance < mouseRadius) {
+            fill(255)
+            square(gridCoords[i][0],gridCoords[i][1],squareSize)
+        }
+        else {
+            fill(50)
+            square(gridCoords[i][0],gridCoords[i][1],squareSize)
         }
     }
-
 
     infoDisplay();
 

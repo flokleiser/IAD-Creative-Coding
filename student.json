@@ -12,7 +12,7 @@
             "folder" : "02Other",
             "startNumber": 5,
             "projectNumber":"4",
-            "projectNames": ["Tiles", "ASCII", "Lorenz-Attractor", "Petals"]
+            "projectNames": ["Tiles", "Noise", "Lorenz-Attractor", "Petals"]
         }
   ]
 }

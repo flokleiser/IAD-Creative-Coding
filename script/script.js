@@ -44,7 +44,8 @@ function createProjectCard() {
             //     student.projects[i].projectNames[j] || `project${j + 1}`;
 
             let titleColor = j % 2 === 0 ? "black" : "white";
-            let titleBackgroundColor = j === 1 ? "rgba(0,0,0,0.75)" : j === 0 ? "rgba(255,255,255,0.75)" : " ";
+            let titleBackgroundColor = j % 2 === 0 ? "white" : "black";
+            // let titleBackgroundColor = j === 1 ? "rgba(0,0,0,0.75)" : j === 0 ? "rgba(255,255,255,0.75)" : " ";
 
             articles.push(`
         <div class="card" id="${childId}"  onclick="openProject()"
@@ -77,25 +78,6 @@ function createProjectCard() {
                 card.style.backgroundImage = `url(./projects/${projectFolder}/project${projectNumber}/thumbnail.png)`;
             });
         });
-    //     const cards = article.querySelectorAll(".card");
-    //     cards.forEach((card, index) => {
-    //       const projectFolder = student.projects[i].folder;
-    //       const projectNum = startNumber + index;
-          
-    //       card.addEventListener("mouseenter", () => {
-    //         const gifPath = `./projects/${projectFolder}/project${projectNum}/thumbnail.gif`;
-    //         if (fileExists(gifPath)) {
-    //           card.style.backgroundImage = `url(${gifPath})`;
-    //         }
-    //       });
-          
-    //       card.addEventListener("mouseleave", () => {
-    //         const pngPath = `./projects/${projectFolder}/project${projectNum}/thumbnail.png`;
-    //         const webpPath = `./projects/${projectFolder}/project${projectNum}/thumbnail.webp`;
-    //         const fallbackPath = fileExists(pngPath) ? pngPath : webpPath;
-    //         card.style.backgroundImage = `url(${fallbackPath})`;
-    //       });
-    //     });
     }
 }
 
